@@ -33,11 +33,8 @@ test("لا يوجد مجلد demo ولا مفاتيح أو عناوين اتصا
   }
 });
 
-test("سير النشر لا ينسخ المحاكاة إلى الموقع المنشور", () => {
-  const deploy = read(".github/workflows/deploy.yml");
-  assert.ok(!/cp -R[^\n]*simulation/.test(deploy));
-  assert.ok(!/cp -R[^\n]*demo/.test(deploy));
-  assert.ok(/cp -R client admin styles services dist\//.test(deploy));
+test("لا يوجد إعداد نشر في مستودع التطوير قبل اعتماد الإصدار", () => {
+  assert.equal(existsSync(".github/workflows/deploy.yml"), false);
 });
 
 test("خادم المعاينة: وضع بلا محاكاة لا يحقن العلم ولا يخدم مجلد simulation", async () => {
