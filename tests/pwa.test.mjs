@@ -64,12 +64,8 @@ for (const app of APPS) {
   });
 }
 
-test("النشر الإنتاجي لا يحتوي محاكاة أو /test/", () => {
-  const workflow = readFileSync(join(ROOT, ".github/workflows/deploy.yml"), "utf8");
-  assert.doesNotMatch(workflow, /dist\/test|simulation|preview/i);
-  assert.match(workflow, /cp -R client admin styles services dist\//);
-  assert.match(workflow, /cp -R assets dist\//);
-  assert.match(workflow, /node scripts\/build-pwa\.mjs dist/);
+test("لا يوجد إعداد نشر إنتاجي في مستودع التطوير قبل اعتماد الإصدار", () => {
+  assert.equal(existsSync(join(ROOT, ".github/workflows/deploy.yml")), false);
 });
 
 test("build-pwa يختم عاملي العميل والإدارة فقط دون الحاجة إلى /test/", () => {
