@@ -2,7 +2,7 @@ name: Validate AMAN.C-1 development branch
 
 on:
   push:
-    branches: [feature/foundation-transfer]
+    branches: ['feature/**']
   pull_request:
     branches: [develop]
 
