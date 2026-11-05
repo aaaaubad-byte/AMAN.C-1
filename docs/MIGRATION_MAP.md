@@ -16,7 +16,7 @@
 |---|---|---|
 | واجهة العميل | client/index.html, app.js, ui-v5.js, pwa.js, sw.js, manifest وicons | نقل الشاشة والسلوك كما هما بعد مطابقة الاعتماديات والوظائف |
 | واجهة الإدارة | admin/index.html, app.js, phase3-a5-a8.js, phase3-a9-a12.js, phase3-a13-a17.js, phase4-a18-a25.js, phase5-a26-a31.js, pwa.js, sw.js, manifest وicons | نقل الوظائف كوحدة؛ فحص ترتيب تحميل ملفات المراحل وتكرار المعالجات |
-| الخدمات | services/runtime.js, supabase-adapter.js, supabase-config.js, theme.js, compact-filters.js, aman-ui-v6.js, pull-to-refresh.js, CONTRACTS.md | مطابقة كل عقد واستدعاء؛ عدم افتراض أن وجود adapter يعني أن التطبيق متصل بقاعدة حية |
+| الخدمات | services/runtime.js, supabase-adapter.js, supabase-config.js, theme.js, compact-filters.js, aman-ui-v6.js, pull-to-refresh.js, CONTRACTS.md | صفحات العميل والإدارة تحمّل مكتبة Supabase والإعدادات والمحوّل؛ المحوّل يسجل نفسه في التشغيل العادي. طابق كل RPC مع القاعدة الحية |
 | المحاكاة | simulation/simulation-adapter.js وREADME | عزلها بوضوح عن أي تشغيل حقيقي وعدم استخدامها كبيانات إنتاج |
 | الأنماط | styles/app.css وvisual-v6.css وadmin/login.css | الحفاظ على الشكل وترتيب التحميل؛ توحيد التكرار بعد إثباته فقط |
 | العلامة | assets/brand ونسخ أيقونات العميل والإدارة | جرد المراجع والملفات المتطابقة قبل اختيار نسخة واحدة |
