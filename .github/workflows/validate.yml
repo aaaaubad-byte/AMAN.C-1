@@ -1,0 +1,32 @@
+name: Validate AMAN.C-1 development branch
+
+on:
+  push:
+    branches: [feature/foundation-transfer]
+  pull_request:
+    branches: [develop]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser test dependency
+        run: |
+          npm init -y
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Run all Node and browser tests
+        env:
+          AMAN_REQUIRE_BROWSER: "1"
+        run: node --test tests/*.test.js tests/*.test.mjs
+      - name: Validate files, local paths, JavaScript and PWA manifests
+        run: node scripts/validate.mjs
