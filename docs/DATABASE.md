@@ -21,6 +21,7 @@
   - `20261103020323_admin_rpcs_part2`
   - `20261103020953_revoke_public_execution_rls_auto_enable`
 - 48 دالة بصلاحية SECURITY DEFINER، و46 منها قابلة للتنفيذ من authenticated وفق الاستعلام الأولي.
+- تمت مطابقة أسماء 45 دالة RPC التي يستدعيها محوّل Supabase في الكود مع الدوال الموجودة في مخطط public؛ جميع الأسماء الـ45 وُجدت، وكلها SECURITY DEFINER وتستقبل وسيطاً من نوع jsonb. هذا يثبت وجود الدوال بالاسم والتوقيع العام فقط، ولا يغني عن مراجعة منطق التفويض ومحتوى كل دالة واختبارها.
 - الجداول المرصودة:
   `app_content`, `audit_log`, `companies`, `company_prefixes`, `company_task_settings`, `notification_broadcasts`, `notifications`, `number_alerts`, `number_links`, `numbers`, `operation_requests`, `payment_methods`, `profile_status_history`, `profiles`, `protection_events`, `protection_packages`, `protections`, `reactivation_settings`, `rejection_reasons`, `report_actions`, `reports`, `tasks`.
 
