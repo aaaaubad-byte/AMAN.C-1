@@ -94,10 +94,8 @@ document.addEventListener("aman:admin-screenchange",e=>{
  if(currentScreen==="numbers"){renderNumbersShell();loadNumbers();}
 });
 document.addEventListener("click",e=>{
- const target=e.target.closest("button[data-admin-action]");
- if(!target)return;
- const action=target.dataset.adminAction;
- if(action==="approve"){e.preventDefault();openApprovalDialog();}
- else if(action==="reject"){e.preventDefault();openRejectDialog();}
+ const target=e.target.closest("button");if(!target)return;
+ if(target.textContent.trim()==="مراجعة أثر الاعتماد"){e.preventDefault();e.stopImmediatePropagation();openApprovalDialog();}
+ if(target.textContent.trim()==="رفض الطلب"){e.preventDefault();e.stopImmediatePropagation();openRejectDialog();}
 },true);
 })();
