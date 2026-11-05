@@ -1,0 +1,11 @@
+{
+  "name": "aman-c-1",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js tests/*.test.mjs",
+    "validate": "node scripts/validate.mjs",
+    "preview": "node scripts/local-preview.mjs"
+  }
+}
