@@ -120,8 +120,8 @@ function openInlineActions(record,host){
  const actions=document.createElement("section");actions.className="surface";
  const h=document.createElement("h2");h.className="surface-title";h.textContent="إجراءات الطلب";actions.append(h);
  const note=document.createElement("p");note.className="surface-desc";note.textContent="يتحقق أمان من الصلاحية والبيانات ومرجع الدفع قبل اعتماد الطلب أو رفضه.";actions.append(note);
- const approve=document.createElement("button");approve.className="btn btn-block";approve.type="button";approve.textContent="مراجعة أثر الاعتماد";addActionIcon(approve,"doc");approve.addEventListener("click",()=>showApprovePreview(record,actions));actions.append(approve);
- const reject=document.createElement("button");reject.className="btn btn-outline btn-block";reject.type="button";reject.style.marginTop="9px";reject.textContent="رفض الطلب";addActionIcon(reject,"flag");reject.addEventListener("click",()=>showRejectForm(record,actions));actions.append(reject);host.append(actions);
+ const approve=document.createElement("button");approve.className="btn btn-block";approve.type="button";approve.textContent="مراجعة أثر الاعتماد";addActionIcon(approve,"doc");approve.dataset.adminAction="approve";approve.addEventListener("click",()=>showApprovePreview(record,actions));actions.append(approve);
+ const reject=document.createElement("button");reject.className="btn btn-outline btn-block";reject.type="button";reject.style.marginTop="9px";reject.textContent="رفض الطلب";addActionIcon(reject,"flag");reject.dataset.adminAction="reject";reject.addEventListener("click",()=>showRejectForm(record,actions));actions.append(reject);host.append(actions);
 }
 async function showApprovePreview(record,host){
  const s=service(),box=document.createElement("div");box.className="soft-surface";const h=document.createElement("h3");h.textContent="تأكيد أثر الاعتماد";box.append(h);

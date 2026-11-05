@@ -37,7 +37,7 @@ async function goSettings(page) {
 }
 
 test("بلا محاكاة: يُسجَّل محوّل Supabase ولا ينجح الدخول عند انقطاع الاتصال", { skip }, async () => {
-  for (const path of ["/client/", "/admin/"]) {
+  for (const path of ["/apps/customer/", "/apps/admin/"]) {
     const t = await open(path, { simulation: false });
     await t.page.waitForFunction(() => window.AMANServices && window.AMANServices.status().configured);
     assert.equal(await t.page.evaluate(() => window.AMANServices.status().adapter), "supabase");
@@ -46,7 +46,7 @@ test("بلا محاكاة: يُسجَّل محوّل Supabase ولا ينجح ا
     assert.equal(await t.page.locator("#aman-service-banner").count(), 0);
     await t.done();
   }
-  const t = await open("/admin/", { simulation: false });
+  const t = await open("/apps/admin/", { simulation: false });
   await t.page.fill("#admin-username", ADMIN.email);
   await t.page.fill("#admin-password", ADMIN.password);
   await t.page.click("#admin-login-form button[type=submit]");
@@ -57,7 +57,7 @@ test("بلا محاكاة: يُسجَّل محوّل Supabase ولا ينجح ا
 });
 
 test("المحاكاة ترفض التسجيل على مضيف غير محلي (الواجهة بلا محاكاة)", { skip }, async () => {
-  const t = await open("/admin/", { simulation: false });
+  const t = await open("/apps/admin/", { simulation: false });
   const refused = await t.page.evaluate(() => {
     try { window.AMANServices.register({ name: "x", simulation: true, client: {}, admin: {} }); return false; }
     catch { return true; }
@@ -67,7 +67,7 @@ test("المحاكاة ترفض التسجيل على مضيف غير محلي (
 });
 
 test("المحاكاة تبدأ فارغة: لا شركات ولا طلبات ولا بيانات تُنشأ تلقائيًا", { skip }, async () => {
-  const t = await open("/admin/");
+  const t = await open("/apps/admin/");
   await adminLogin(t.page);
   const r = await t.page.evaluate(async () => ({
     companies: (await window.AMANAdminServices.listCompanies()).companies,
@@ -84,7 +84,7 @@ test("المحاكاة تبدأ فارغة: لا شركات ولا طلبات و
 });
 
 test("إضافة شركة: تحقق ← حفظ عبر الخدمة ← ظهور في القائمة ← رسالة نجاح بعد النجاح فقط", { skip }, async () => {
-  const t = await open("/admin/");
+  const t = await open("/apps/admin/");
   await adminLogin(t.page);
   await goSettings(t.page);
   await t.page.click("text=إضافة شركة");
@@ -118,7 +118,7 @@ test("إضافة شركة: تحقق ← حفظ عبر الخدمة ← ظهور 
 });
 
 test("فشل الحفظ: لا نجاح زائف وتبقى المدخلات", { skip }, async () => {
-  const t = await open("/admin/");
+  const t = await open("/apps/admin/");
   await adminLogin(t.page);
   await goSettings(t.page);
   await t.page.click("text=إضافة شركة");
@@ -142,7 +142,7 @@ test("فشل الحفظ: لا نجاح زائف وتبقى المدخلات", { 
 });
 
 test("RTL وعدم وجود تمرير أفقي على شاشة هاتف لصفحتي العميل والإدارة", { skip }, async () => {
-  for (const path of ["/client/", "/admin/"]) {
+  for (const path of ["/apps/customer/", "/apps/admin/"]) {
     const t = await open(path, { viewport: { width: 360, height: 740 } });
     await t.page.waitForTimeout(300);
     assert.equal(await t.page.evaluate(() => document.documentElement.dir), "rtl");

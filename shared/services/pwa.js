@@ -1,12 +1,12 @@
 /*
- * AMAN.C — تسجيل Service Worker وإشعار التحديث (PWA) لتطبيق الإدارة.
+ * AMAN.C — تسجيل Service Worker وإشعار التحديث المشترك لتطبيقات العميل والإدارة (PWA).
  *
  * - يسجّل ./sw.js بنطاق هذا التطبيق فقط (updateViaCache: "none" ليفحص المتصفح الملف من الشبكة دائمًا).
  * - يفحص وجود إصدار جديد عند التحميل، وعند عودة التطبيق للواجهة، وعند عودة الاتصال، وكل 15 دقيقة.
  * - عند وصول إصدار جديد يعرض شريطًا صغيرًا غير مانع (تحديث الآن / لاحقًا). لا يُعاد تحميل الصفحة
- *   إلا بعد ضغط المدير «تحديث الآن»، فلا تُقاطَع عملية إدارية جارية. وإن اختار «لاحقًا» أو تجاهله،
+ *   إلا بعد ضغط المستخدم «تحديث الآن»، فلا تُقاطَع عملية جارية. وإن اختار «لاحقًا» أو تجاهله،
  *   تُطبَّق النسخة الجديدة تلقائيًا عند فتح التطبيق مرة أخرى بعد إغلاقه.
- * - لا يخزّن شيئًا في المتصفح ولا يلمس جلسة المدير (تبقى في sessionStorage كما صُمّمت).
+ * - لا يخزّن شيئًا في المتصفح ولا يلمس جلسات الدخول.
  */
 (() => {
 "use strict";
@@ -31,7 +31,6 @@ function apply(worker) {
   applying = true;
   const target = (reg && reg.waiting) || worker;
   if (target) target.postMessage({ type: "SKIP_WAITING" });
-  /* احتياط: إن لم يحدث تبديل للعامل خلال ثوانٍ نعيد التحميل مباشرة (الشبكة أولًا تضمن ملفات حديثة). */
   setTimeout(() => location.reload(), 4000);
 }
 
@@ -67,14 +66,13 @@ function watch(r) {
 }
 
 navigator.serviceWorker.addEventListener("controllerchange", () => {
-  /* لا نعيد التحميل إلا إذا طلب المدير التحديث (تجنّب إعادة التحميل عند أول تثبيت). */
   if (applying) location.reload();
 });
 
 function start() {
   navigator.serviceWorker.register("./sw.js", { scope: "./", updateViaCache: "none" })
     .then(r => { reg = r; watch(r); check(); })
-    .catch(() => { /* التطبيق يعمل من المتصفح بدون Service Worker */ });
+    .catch(() => {});
 }
 if (document.readyState === "complete") start(); else window.addEventListener("load", start);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") check(); });

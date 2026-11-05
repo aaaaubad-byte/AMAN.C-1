@@ -5,7 +5,7 @@ import fs from "node:fs";
 import vm from "node:vm";
 
 const read = rel => fs.readFileSync(new URL(rel, import.meta.url), "utf8");
-const RUNTIME = read("../services/runtime.js"), CONFIG = read("../services/supabase-config.js"), ADAPTER = read("../services/supabase-adapter.js");
+const RUNTIME = read("../shared/services/runtime.js"), CONFIG = read("../shared/services/supabase-config.js"), ADAPTER = read("../shared/services/supabase-adapter.js");
 
 function build({ sim = false, session = { user: { email: "u@x.com" } }, handler = () => ({ data: { success: true }, error: null, status: 200 }), auth = {} } = {}) {
   const calls = { rpc: [], signedOut: 0, refreshed: 0, signIn: 0 };
@@ -142,14 +142,14 @@ test("إنشاء الحساب: بريد مكرر، تأكيد بريد مطلو�
 });
 
 test("لا أسرار ولا service_role في ملفات الاتصال أو الصفحات", () => {
-  for (const f of ["../services/supabase-config.js", "../services/supabase-adapter.js", "../client/index.html", "../admin/index.html"]) {
+  for (const f of ["../shared/services/supabase-config.js", "../shared/services/supabase-adapter.js", "../apps/customer/index.html", "../apps/admin/index.html"]) {
     const t = read(f);
     assert.doesNotMatch(t, /service_role|sb_secret_|eyJ[A-Za-z0-9_-]{20,}/, f);
   }
 });
 
 test("ترتيب تحميل الصفحات: runtime ثم المكتبة ثم الإعدادات ثم المحوّل ثم الواجهة", () => {
-  for (const f of ["../client/index.html", "../admin/index.html"]) {
+  for (const f of ["../apps/customer/index.html", "../apps/admin/index.html"]) {
     const h = read(f);
     const order = ["services/runtime.js", "supabase-js@2.104.0", "services/supabase-config.js", "services/supabase-adapter.js", "app.js"].map(x => h.indexOf(x));
     assert.ok(order.every(i => i > 0), f);

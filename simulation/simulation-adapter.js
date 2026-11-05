@@ -1,12 +1,12 @@
 /*
  * AMAN.C — محوّل المحاكاة المحلية (Simulation Adapter)
  *
- * يطبّق عقود الخدمات نفسها (services/CONTRACTS.md) فوق localStorage المعزول عن الإنتاج.
+ * يطبّق عقود الخدمات نفسها (shared/services/CONTRACTS.md) فوق localStorage المعزول عن الإنتاج.
  * ليس نظام مصادقة آمنًا وليس قاعدة بيانات؛ لا تستخدم بيانات حقيقية.
  *
  * ضوابط العزل:
  *  1) لا يعمل إلا إذا حقن خادم المعاينة المحلية (scripts/local-preview.mjs) العلم window.__AMAN_SIMULATION__.
- *  2) لا يعمل إلا على localhost / 127.0.0.1. كما أن services/runtime.js يرفض تسجيله خارجهما.
+ *  2) لا يعمل إلا على localhost / 127.0.0.1. كما أن shared/services/runtime.js يرفض تسجيله خارجهما.
  *  3) لا يتصل بأي خادم ولا يحتوي عناوين اتصال أو مفاتيح.
  *  4) يبدأ فارغًا: لا شركات ولا باقات ولا وسائل دفع ولا طلبات. الاستثناء الوحيد حساب مدير المحاكاة
  *     (يلزم لتسجيل الدخول) وهو معلن في شريط المحاكاة. بيانات العيّنة اختيارية بزر صريح.
@@ -33,7 +33,7 @@
 "use strict";
 const flag = window.__AMAN_SIMULATION__;
 if (!flag || flag.enabled !== true) return;
-if (!window.AMANServices) { console.error("AMAN simulation: services/runtime.js must load first."); return; }
+if (!window.AMANServices) { console.error("AMAN simulation: shared/services/runtime.js must load first."); return; }
 if (!["localhost", "127.0.0.1", "[::1]", "::1"].includes(location.hostname)) { console.error("AMAN simulation: refused outside localhost."); return; }
 
 const STORAGE_KEY = "aman_c_simulation_v2";
@@ -708,7 +708,7 @@ function banner() {
  const sample = document.createElement("button"); sample.type = "button"; sample.id = "aman-simulation-sample"; sample.textContent = "تحميل بيانات عيّنة";
  const reset = document.createElement("button"); reset.type = "button"; reset.id = "aman-simulation-reset"; reset.textContent = "إعادة الضبط إلى حالة فارغة";
  const info = document.createElement("small");
- info.textContent = location.pathname.includes("/admin/") ? "حساب مدير المحاكاة: " + SIM_ADMIN.email + " / " + SIM_ADMIN.password : "أنشئ حساب عميل جديدًا من شاشة الدخول.";
+ info.textContent = location.pathname.includes("/apps/admin/") ? "حساب مدير المحاكاة: " + SIM_ADMIN.email + " / " + SIM_ADMIN.password : "أنشئ حساب عميل جديدًا من شاشة الدخول.";
  sample.addEventListener("click", () => { if (loadSample()) location.reload(); else sample.textContent = "العيّنة محمّلة"; });
  reset.addEventListener("click", () => { if (confirm("سيتم مسح كل بيانات المحاكاة المحلية وإعادتها إلى حالة فارغة. هل تريد المتابعة؟")) { localStorage.removeItem(STORAGE_KEY); location.reload(); } });
  bar.append(title, note, sample, reset, info);

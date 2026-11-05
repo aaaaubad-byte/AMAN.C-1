@@ -19,13 +19,13 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".webmanifest": "application/manifest+json; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png", ".ico": "image/x-icon", ".md": "text/plain; charset=utf-8" };
-const PUBLISHED = ["client", "admin", "styles", "services"];
-const RUNTIME_TAG = '<script defer src="../services/runtime.js"></script>';
+const PUBLISHED = ["apps", "shared", "assets"];
+const RUNTIME_TAG = '<script defer src="../../shared/services/runtime.js"></script>';
 const FLAG_TAG = '<script>window.__AMAN_SIMULATION__={enabled:true,source:"local-preview"};</script>';
-const ADAPTER_TAG = '<script defer src="../simulation/simulation-adapter.js"></script>';
+const ADAPTER_TAG = '<script defer src="../../simulation/simulation-adapter.js"></script>';
 
 function injectSimulation(html) {
- if (!html.includes(RUNTIME_TAG)) throw new Error("صفحة بلا services/runtime.js: لا يمكن حقن المحاكاة.");
+ if (!html.includes(RUNTIME_TAG)) throw new Error("صفحة بلا shared/services/runtime.js: لا يمكن حقن المحاكاة.");
  return html.replace(RUNTIME_TAG, FLAG_TAG + RUNTIME_TAG + ADAPTER_TAG);
 }
 
@@ -52,7 +52,7 @@ export function startServer({ port = 8080, simulation = true, host = "127.0.0.1"
    if (!info) return send(404, "غير موجود");
    let body = await readFile(file);
    const type = MIME[extname(file)] || "application/octet-stream";
-   if (simulation && extname(file) === ".html" && (top === "client" || top === "admin")) body = injectSimulation(body.toString("utf8"));
+   if (simulation && extname(file) === ".html" && (top === "apps" && (path.startsWith("/apps/customer/") || path.startsWith("/apps/admin/")))) body = injectSimulation(body.toString("utf8"));
    return send(200, body, type);
   } catch (error) { return send(500, "خطأ في الخادم: " + error.message); }
  });
@@ -72,8 +72,8 @@ if (isMain) {
  startServer({ port, simulation }).then(({ port: actual }) => {
   const base = "http://127.0.0.1:" + actual;
   console.log(simulation ? "وضع المحاكاة المحلية مفعّل (بيانات غير حقيقية، بلا اتصال بأي خادم)." : "وضع بلا محاكاة: الواجهات تعرض «الخدمة غير مهيأة» كما في الإنتاج.");
-  console.log("واجهة العميل : " + base + "/client/");
-  console.log("واجهة الإدارة: " + base + "/admin/");
+  console.log("واجهة العميل : " + base + "/apps/customer/");
+  console.log("واجهة الإدارة: " + base + "/apps/admin/");
   console.log("للإيقاف: اضغط Ctrl+C");
  }).catch(error => {
   console.error(error.code === "EADDRINUSE" ? "المنفذ مستخدم. جرّب: node scripts/local-preview.mjs --port 8081" : "تعذر تشغيل الخادم: " + error.message);

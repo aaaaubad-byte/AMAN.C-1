@@ -9,8 +9,13 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,4 +33,4 @@ jobs:
           AMAN_REQUIRE_BROWSER: "1"
         run: node --test tests/*.test.js tests/*.test.mjs
       - name: Validate files, local paths, JavaScript and PWA manifests
-        run: node scripts/validate.mjs
+        run: npm run validate

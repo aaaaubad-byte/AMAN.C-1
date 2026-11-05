@@ -1,4 +1,4 @@
-// اختبار مطابقة عقود الخدمات (services/CONTRACTS.md).
+// اختبار مطابقة عقود الخدمات (shared/services/CONTRACTS.md).
 // افتراضيًا يحمّل services/runtime.js ثم محوّل المحاكاة في بيئة vm بساعة قابلة للتحكم، ويستدعي عقود
 // window.AMANClientServices و window.AMANAdminServices كما تفعل الواجهات (الغلاف + المحوّل معًا).
 // لتوجيهه إلى محوّل آخر: AMAN_CONTRACT_HARNESS=<مسار وحدة ES تصدّر createHarness()> تُرجع
@@ -14,7 +14,7 @@ import vm from "node:vm";
 import { pathToFileURL } from "node:url";
 
 const read = rel => fs.readFileSync(new URL(rel, import.meta.url), "utf8");
-const RUNTIME = read("../services/runtime.js");
+const RUNTIME = read("../shared/services/runtime.js");
 const ADAPTER = read("../simulation/simulation-adapter.js");
 const START = "2026-01-01T09:00:00+03:00";
 

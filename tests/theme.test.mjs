@@ -5,7 +5,7 @@ import { runInNewContext } from "node:vm";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const SOURCE = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../services/theme.js"), "utf8");
+const SOURCE = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../shared/services/theme.js"), "utf8");
 
 function loadTheme(systemDark = false, saved = null) {
   const values = new Map(saved ? [["aman-display-theme-v1", saved]] : []);

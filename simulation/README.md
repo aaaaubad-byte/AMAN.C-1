@@ -4,8 +4,8 @@
 
 ## التشغيل
 1. شغّل خادم ملفات ثابت من جذر المشروع، مثل: `python3 -m http.server 8080`.
-2. افتح العميل: `http://localhost:8080/client/?demo=1`.
-3. افتح الإدارة في تبويب آخر: `http://localhost:8080/admin/?demo=1`.
+2. افتح العميل: `http://localhost:8080/apps/customer/?demo=1`.
+3. افتح الإدارة في تبويب آخر: `http://localhost:8080/apps/apps/admin/?demo=1`.
 4. استخدم الحسابات:
    - المدير: `admin@aman.demo` وكلمة المرور `1234`.
    - العميل: `customer@aman.demo` وكلمة المرور `1234`.

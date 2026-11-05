@@ -1,6 +1,6 @@
 /*
  * AMAN.C — تنسيق شاشة تسجيل دخول الإدارة فقط.
- * الألوان تأتي حصراً من الرموز المركزية (styles/visual-v6.css القسم 1): --bg #F4F8FA، --paper #FFFFFF،
+ * الألوان تأتي حصراً من الرموز المركزية (shared/styles/visual-layer.css القسم 1): --bg #F4F8FA، --paper #FFFFFF،
  * --field-bg #E6EEF5، --field-border #A9BDC7، --turquoise #078F87. لا ألوان حرفية للوضع الفاتح هنا.
  * قواعد الوضع الداكن في آخر الملف كما هي دون تغيير.
  * لا يؤثر على بقية شاشات الإدارة ولا على تطبيق العميل (محصور بـ .admin-app و #admin-login).

@@ -3,23 +3,53 @@
  * يخزّن موارد التطبيق الثابتة المسموح بها فقط؛ لا يخزّن استجابات خاصة أو بيانات جلسات.
  */
 "use strict";
-const APP = "client";
+const APP = "customer";
 const BUILD = "__BUILD_ID__";
 const SELF_URL = self.location.href;
 const SCOPE = new URL("./", SELF_URL).href;
 const PREFIX = "aman-" + APP + "-" + new URL(SCOPE).pathname.replace(/[^a-z0-9]+/gi, "_") + "-";
 const CACHE = PREFIX + BUILD;
-const ROOT = new URL("../", SELF_URL).href;
 const PRECACHE = [
-  "./", "./app.js", "./ui-v5.js", "./pwa.js", "./manifest.webmanifest", "./icons/icon-192-v3.png", "./icons/icon-512-v3.png", "./icons/icon-maskable-512-v3.png", "./icons/apple-touch-icon-v3.png",
-  "../styles/app.css", "../services/runtime.js", "../services/supabase-config.js", "../services/supabase-adapter.js", "../services/theme.js"
+  "./",
+  "./app.js",
+  "./notifications-tabs.js",
+  "./manifest.webmanifest",
+  "../../assets/icons/customer/icon-192.png",
+  "../../assets/icons/customer/icon-512.png",
+  "../../assets/icons/customer/icon-maskable-512.png",
+  "../../assets/icons/customer/apple-touch-icon.png",
+  "../../shared/styles/app.css",
+  "../../shared/styles/visual-layer.css",
+  "../../shared/services/runtime.js",
+  "../../shared/services/supabase-config.js",
+  "../../shared/services/supabase-adapter.js",
+  "../../shared/services/theme.js",
+  "../../shared/services/pwa.js",
+  "../../shared/components/visual-layer-loader.js",
+  "../../shared/components/visual-layer.js",
+  "../../shared/components/compact-filters.js",
+  "../../shared/components/pull-to-refresh.js",
+  "../../assets/brand/logo-mark.png",
+  "../../assets/brand/logo-mark-light.png"
 ].map(p => new URL(p, SELF_URL).href);
 const SHARED_ALLOWED = new Set([
-  new URL("../styles/app.css", SELF_URL).href,
-  new URL("../services/runtime.js", SELF_URL).href,
-  new URL("../services/supabase-config.js", SELF_URL).href,
-  new URL("../services/supabase-adapter.js", SELF_URL).href,
-  new URL("../services/theme.js", SELF_URL).href
+  new URL("../../assets/icons/customer/icon-192.png", SELF_URL).href,
+  new URL("../../assets/icons/customer/icon-512.png", SELF_URL).href,
+  new URL("../../assets/icons/customer/icon-maskable-512.png", SELF_URL).href,
+  new URL("../../assets/icons/customer/apple-touch-icon.png", SELF_URL).href,
+  new URL("../../shared/styles/app.css", SELF_URL).href,
+  new URL("../../shared/styles/visual-layer.css", SELF_URL).href,
+  new URL("../../shared/services/runtime.js", SELF_URL).href,
+  new URL("../../shared/services/supabase-config.js", SELF_URL).href,
+  new URL("../../shared/services/supabase-adapter.js", SELF_URL).href,
+  new URL("../../shared/services/theme.js", SELF_URL).href,
+  new URL("../../shared/services/pwa.js", SELF_URL).href,
+  new URL("../../shared/components/visual-layer-loader.js", SELF_URL).href,
+  new URL("../../shared/components/visual-layer.js", SELF_URL).href,
+  new URL("../../shared/components/compact-filters.js", SELF_URL).href,
+  new URL("../../shared/components/pull-to-refresh.js", SELF_URL).href,
+  new URL("../../assets/brand/logo-mark.png", SELF_URL).href,
+  new URL("../../assets/brand/logo-mark-light.png", SELF_URL).href
 ]);
 const APP_STATIC = new Set(PRECACHE);
 const PRIVATE_HEADERS = /(?:^|,)\s*(?:private|no-store|no-cache|must-revalidate)\b/i;

@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { stampServiceWorkers, normalizeBuildId, PLACEHOLDER } from "../scripts/build-pwa.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const APPS = ["client", "admin"];
+const APPS = ["apps/customer", "apps/admin"];
 
 function pngSize(file) {
   const buf = readFileSync(file);
@@ -21,7 +21,7 @@ for (const app of APPS) {
     assert.equal(manifest.display, "standalone");
     assert.equal(manifest.dir, "rtl");
     assert.equal(manifest.lang, "ar");
-    assert.equal(manifest.id, "/AMAN.C/" + app + "/");
+    assert.equal(manifest.id, "./");
     assert.equal(manifest.start_url, "./");
     assert.equal(manifest.scope, "./");
     for (const icon of manifest.icons) {
@@ -33,15 +33,16 @@ for (const app of APPS) {
       }
     }
     assert.ok(manifest.icons.some(icon => icon.purpose === "maskable"));
-    const { width, height } = pngSize(join(ROOT, app, "icons", "apple-touch-icon-v3.png"));
+    const { width, height } = pngSize(join(ROOT, "assets", "icons", app.endsWith("customer") ? "customer" : "admin", "apple-touch-icon.png"));
     assert.deepEqual([width, height], [180, 180]);
   });
 
   test(app + ": الصفحة تربط manifest وpwa.js وأيقونة iOS", () => {
     const html = readFileSync(join(ROOT, app, "index.html"), "utf8");
     assert.match(html, /<link rel="manifest" href="\.\/manifest\.webmanifest">/);
-    assert.match(html, /<link rel="apple-touch-icon" href="\.\/icons\/apple-touch-icon-v3\.png">/);
-    assert.match(html, /<script defer src="\.\/pwa\.js"><\/script>/);
+    const iconApp = app.endsWith("customer") ? "customer" : "admin";
+    assert.ok(html.includes(`href="../../assets/icons/${iconApp}/apple-touch-icon.png`));
+    assert.ok(html.includes('<script defer src="../../shared/services/pwa.js"></script>'));
   });
 
   test(app + ": Service Worker يقصر التخزين على موارد ثابتة ويرفض الاستجابات الخاصة", () => {
@@ -58,7 +59,7 @@ for (const app of APPS) {
   });
 
   test(app + ": شريط التحديث بهوية أمان بلا أخضر", () => {
-    const js = readFileSync(join(ROOT, app, "pwa.js"), "utf8");
+    const js = readFileSync(join(ROOT, "shared", "services", "pwa.js"), "utf8");
     assert.doesNotMatch(js, /#09a478/i);
     assert.match(js, /#102d45/);
   });

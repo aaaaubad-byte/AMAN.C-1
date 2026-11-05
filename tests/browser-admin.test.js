@@ -10,7 +10,7 @@ test.after(async () => { if (browser) await browser.close(); });
 
 const view = page => page.locator("#admin-generic-view");
 const T = { timeout: 5000 };
-async function start(path = "/admin/", opts) {
+async function start(path = "/apps/admin/", opts) {
   const t = await open(browser, path, opts);
   await adminLogin(t.page);
   return t;
@@ -40,7 +40,7 @@ test("D1: الشريط السفلي خمسة تبويبات والمزيد يف�
 });
 
 test("كل أقسام الإدارة على شاشة هاتف وبحالة فارغة: بلا أخطاء، بلا تمرير أفقي، وبلا تحميل معلّق", { skip }, async () => {
-  const t = await start("/admin/", { viewport: { width: 360, height: 740 } });
+  const t = await start("/apps/admin/", { viewport: { width: 360, height: 740 } });
   for (const name of SECTIONS) {
     await go(t.page, name);
     await t.page.waitForTimeout(350);
@@ -397,7 +397,7 @@ test("الشركة: نافذة الظهور فارغة ومطلوبة بلا ا�
 });
 
 test("حالة الفشل لكل شاشة: تعذّر الخدمة يعرض رسالة خطأ لا بيانات ولا تحميلًا معلّقًا ولا أخطاء JavaScript", { skip }, async () => {
-  const t = await start("/admin/", { viewport: { width: 360, height: 740 } });
+  const t = await start("/apps/admin/", { viewport: { width: 360, height: 740 } });
   await seed(t.page);
   await approve(t.page, await submitRequest(t.page)); // بيانات موجودة فعلًا: يجب ألا تظهر عند فشل الخدمة
   const methods = { requests: "listRequests", numbers: "listNumbers", customers: "listCustomers", tasks: "listTasks", followup: "listTasks", complaints: "listComplaints", reports: "getRevenueReport", settings: "listCompanies", notifications: "listAdminNotifications", alerts: "listAdminAlerts", packages: "listPackages", payments: "listPaymentMethods", content: "getAppContent", audit: "listAuditLog" };

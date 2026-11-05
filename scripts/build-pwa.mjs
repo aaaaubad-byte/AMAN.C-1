@@ -8,7 +8,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const PLACEHOLDER = "__BUILD_ID__";
-const APPS = ["client", "admin"];
+const APPS = ["apps/customer", "apps/admin"];
 
 export function normalizeBuildId(raw) {
   const id = String(raw || "").trim().replace(/[^A-Za-z0-9._-]/g, "").slice(0, 40);

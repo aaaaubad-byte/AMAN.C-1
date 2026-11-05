@@ -3,8 +3,17 @@ import { spawnSync } from "node:child_process";
 import { resolve, dirname } from "node:path";
 
 const required = [
-  "index.html", "client/index.html", "client/app.js",
-  "admin/index.html", "admin/app.js", "admin/phase3-a5-a8.js", "admin/phase3-a9-a12.js", "admin/phase3-a13-a17.js", "admin/phase4-a18-a25.js", "admin/phase5-a26-a31.js", "styles/app.css", "services/runtime.js", "simulation/simulation-adapter.js", "scripts/local-preview.mjs"
+  "index.html",
+  "apps/customer/index.html", "apps/customer/app.js", "apps/customer/notifications-tabs.js", "apps/customer/manifest.webmanifest", "apps/customer/sw.js",
+  "apps/admin/index.html", "apps/admin/app.js", "apps/admin/login.css", "apps/admin/manifest.webmanifest", "apps/admin/sw.js",
+  "apps/admin/modules/numbers.js", "apps/admin/modules/requests.js", "apps/admin/modules/customers.js", "apps/admin/modules/tasks-reports.js", "apps/admin/modules/operations.js", "apps/admin/modules/management.js",
+  "shared/styles/app.css", "shared/styles/visual-layer.css",
+  "shared/services/runtime.js", "shared/services/theme.js", "shared/services/pwa.js", "shared/services/supabase-config.js", "shared/services/supabase-adapter.js",
+  "shared/components/visual-layer-loader.js", "shared/components/visual-layer.js", "shared/components/compact-filters.js", "shared/components/pull-to-refresh.js",
+  "assets/brand/logo-mark.png", "assets/brand/logo-mark-light.png",
+  "assets/icons/customer/icon-192.png", "assets/icons/customer/icon-512.png", "assets/icons/customer/icon-maskable-512.png", "assets/icons/customer/apple-touch-icon.png",
+  "assets/icons/admin/icon-192.png", "assets/icons/admin/icon-512.png", "assets/icons/admin/icon-maskable-512.png", "assets/icons/admin/apple-touch-icon.png",
+  "simulation/simulation-adapter.js", "scripts/local-preview.mjs", "scripts/build-pwa.mjs"
 ];
 const failures = [];
 for (const file of required) {
@@ -14,41 +23,42 @@ if (failures.length) {
   console.error(failures.join("\n"));
   process.exit(1);
 }
-const htmlFiles = ["index.html", "client/index.html", "admin/index.html"];
+const htmlFiles = ["index.html", "apps/customer/index.html", "apps/admin/index.html"];
 for (const file of htmlFiles) {
   const html = readFileSync(file, "utf8");
   const refs = [...html.matchAll(/(?:src|href)="([^"]+)"/g)].map(match => match[1]);
+  if (/(?:\.\.\/)(?:client|admin|services|styles)\//.test(html) || /(?:\.\/)(?:client|admin|services|styles)\//.test(html)) failures.push("مسار قديم في الصفحة: " + file);
   for (const ref of refs) {
     if (/^(https?:|#|mailto:|tel:)/i.test(ref)) continue;
     const target = resolve(dirname(resolve(file)), ref);
     if (!existsSync(target)) failures.push(file + " يشير إلى ملف غير موجود: " + ref);
   }
 }
-for (const file of ["client/app.js", "admin/app.js", "admin/phase3-a5-a8.js", "admin/phase3-a9-a12.js", "admin/phase3-a13-a17.js", "admin/phase4-a18-a25.js", "admin/phase5-a26-a31.js", "services/runtime.js", "services/supabase-config.js", "services/supabase-adapter.js", "simulation/simulation-adapter.js"]) {
+for (const file of ["apps/customer/app.js", "apps/customer/notifications-tabs.js", "apps/admin/app.js", "apps/admin/modules/numbers.js", "apps/admin/modules/requests.js", "apps/admin/modules/customers.js", "apps/admin/modules/tasks-reports.js", "apps/admin/modules/operations.js", "apps/admin/modules/management.js", "shared/services/runtime.js", "shared/services/theme.js", "shared/services/pwa.js", "shared/services/supabase-config.js", "shared/services/supabase-adapter.js", "shared/components/visual-layer-loader.js", "shared/components/visual-layer.js", "shared/components/compact-filters.js", "shared/components/pull-to-refresh.js", "simulation/simulation-adapter.js"]) {
   const check = spawnSync(process.execPath, ["--check", file], { encoding: "utf8" });
   if (check.status !== 0) failures.push("خطأ صياغة JavaScript في " + file + ": " + check.stderr);
 }
-for (const file of ["client/index.html", "admin/index.html"]) {
+for (const file of ["apps/customer/index.html", "apps/admin/index.html"]) {
   const html = readFileSync(file, "utf8");
   if (/shared\/storage\.js|localStorage/i.test(html)) {
     failures.push("يجب ألا تعتمد واجهة المنتج على تخزين المتصفح التجريبي: " + file);
   }
 }
-for (const file of ["client/index.html", "admin/index.html", "index.html"]) {
+for (const file of ["apps/customer/index.html", "apps/admin/index.html", "index.html"]) {
   const html = readFileSync(file, "utf8");
   if (/simulation|demo-services|__AMAN_SIMULATION__|\?demo=1/i.test(html)) failures.push("صفحة إنتاج تشير إلى المحاكاة: " + file);
 }
-for (const file of ["client/index.html", "admin/index.html"]) {
-  if (!readFileSync(file, "utf8").includes("services/runtime.js")) failures.push("الصفحة لا تحمّل طبقة الخدمات: " + file);
+for (const file of ["apps/customer/index.html", "apps/admin/index.html"]) {
+  if (!readFileSync(file, "utf8").includes("shared/services/runtime.js")) failures.push("الصفحة لا تحمّل طبقة الخدمات: " + file);
 }
-for (const file of ["client/app.js", "admin/app.js", "admin/phase3-a5-a8.js", "admin/phase3-a9-a12.js", "admin/phase3-a13-a17.js", "admin/phase4-a18-a25.js", "admin/phase5-a26-a31.js"]) {
+for (const file of ["apps/customer/app.js", "apps/admin/app.js", "apps/admin/modules/numbers.js", "apps/admin/modules/requests.js", "apps/admin/modules/customers.js", "apps/admin/modules/tasks-reports.js", "apps/admin/modules/operations.js", "apps/admin/modules/management.js"]) {
   if (/localStorage|sessionStorage|indexedDB/.test(readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, ""))) failures.push("الواجهة تصل إلى التخزين مباشرة بدل طبقة الخدمات: " + file);
 }
-for (const app of ["client", "admin"]) {
+for (const app of ["apps/customer", "apps/admin"]) {
   const html = readFileSync(app + "/index.html", "utf8");
   if (!html.includes('rel="manifest" href="./manifest.webmanifest"')) failures.push("PWA: الصفحة لا تربط manifest: " + app + "/index.html");
-  if (!html.includes('src="./pwa.js"')) failures.push("PWA: الصفحة لا تحمّل pwa.js: " + app + "/index.html");
-  for (const file of [app + "/pwa.js", app + "/sw.js"]) {
+  if (!html.includes('src="../../shared/services/pwa.js"')) failures.push("PWA: الصفحة لا تحمّل pwa.js: " + app + "/index.html");
+  for (const file of ["shared/services/pwa.js", app + "/sw.js"]) {
     if (!existsSync(resolve(file))) { failures.push("PWA: ملف مفقود: " + file); continue; }
     const check = spawnSync(process.execPath, ["--check", file], { encoding: "utf8" });
     if (check.status !== 0) failures.push("خطأ صياغة JavaScript في " + file + ": " + check.stderr);
