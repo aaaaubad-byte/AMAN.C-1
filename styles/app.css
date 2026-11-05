@@ -1,0 +1,1078 @@
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
+/* ==========================================================================
+   AMAN.C — CENTRAL COLOR / DESIGN TOKENS (single reference; everything below consumes these)
+   Light theme (agreed palette):
+     --bg #F4F8FA screen/window · --paper #FFFFFF cards/containers · --field-bg #E6EEF5 inputs/search
+     --field-border #A9BDC7 · --turquoise #078F87 the only accent (buttons, icons, active, key numbers)
+   Dark theme: values below are the previously effective app.css values, moved verbatim (styles/visual-v6.css
+   still layers its own dark surface values on top, as before).
+   Legacy aliases (--navy, --navy-deep, --green, --green-ink, --turquoise-deep) point to the single turquoise.
+   ========================================================================== */
+:root{
+  color-scheme:light;
+  font-family:Alexandria,'DM Sans',sans-serif;
+  /* surfaces */
+  --bg:#F4F8FA;
+  --paper:#FFFFFF;
+  --sheet:var(--bg);
+  --panel:var(--paper);
+  --panel-2:var(--paper);
+  --tile:var(--paper);
+  /* lines, shadow */
+  --line:#D8E3E9;
+  --border:1px solid #D8E3E9;
+  --shadow:0 1px 3px rgba(21,59,86,.05);
+  /* input / search fields */
+  --field-bg:#E6EEF5;
+  --field-border:#A9BDC7;
+  --search-surface:var(--field-bg);
+  --search-border:var(--field-border);
+  /* accent: one turquoise */
+  --turquoise:#078F87;
+  --turquoise-deep:#078F87;
+  --navy:var(--turquoise);
+  --navy-deep:var(--turquoise);
+  --green:var(--turquoise);
+  --green-ink:var(--turquoise);
+  --green-bg:#E6F4F3;
+  /* text and supporting colors */
+  --text:#18394e;
+  --ink:#153b56;
+  --muted:#778895;
+  --blue:#153b56;
+  --blue-soft:#e7f0f4;
+  --red:#a44343;
+  --red-bg:#e9eff1;
+  --amber:#506b7a;
+  --amber-bg:#f0f4f5;
+  /* icons */
+  --icon-base:var(--blue);
+  --icon-accent:var(--turquoise);
+  --icon-size:23px;
+  /* geometry */
+  --radius-xl:20px;
+  --radius-lg:17px;
+  --radius-md:13px;
+  --radius-control:10px;
+  --control-height:45px;
+}
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#101d25;
+  --sheet:#14232c;
+  --paper:#192b35;
+  --panel:#20333d;
+  --panel-2:#293e48;
+  --tile:#20343e;
+  --line:#354b56;
+  --border:1px solid #354b56;
+  --shadow:none;
+  --search-surface:#1a303a;
+  --search-border:#405965;
+  --turquoise:#4bb8ad;
+  --turquoise-deep:#70c9c0;
+  --navy:#258f88;
+  --navy-deep:#70c9c0;
+  --green:#258f88;
+  --green-ink:#70c9c0;
+  --green-bg:#193d3c;
+  --text:#dce9ee;
+  --ink:#e8f2f5;
+  --muted:#9aadb7;
+  --red:#f1a6a6;
+  --red-bg:#462c30;
+  --amber:#d4b76c;
+  --amber-bg:#423820;
+  --icon-base:#d7e8ee;
+  --icon-accent:var(--turquoise);
+}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}body{font-family:inherit;font-size:12.6px;line-height:1.55;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}[hidden]{display:none!important}:focus-visible{outline:2px solid #079f7a;outline-offset:3px}
+.app{width:min(100%,760px);min-height:100vh;margin:auto;padding:0 16px calc(100px + env(safe-area-inset-bottom));background:var(--sheet)}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px}.brand-symbol{width:34px;height:38px;display:grid;place-items:center;background:#102d45;color:#83a7ba;border-radius:7px 7px 17px 17px;font-size:18px;font-weight:800}.brand-copy strong{display:block;font-size:18.9px;line-height:1;font-weight:800;color:var(--ink)}.brand-copy small{display:block;color:var(--muted);font-size:9.9px;font-weight:700;letter-spacing:1px;margin-top:3px}.icon-btn{width:44px;height:44px;border:0;border-radius:var(--radius-control);background:#e5edf1;color:var(--ink);display:grid;place-items:center}.icon-btn svg,.icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.page-head{padding:12px 2px 18px}.eyebrow{font-size:10.8px;font-weight:700;color:#087f67;margin:0 0 6px}.page-title{font-size:19.8px;line-height:1.4;font-weight:800;margin:0;color:var(--ink)}.page-desc{font-size:10.8px;line-height:1.7;color:var(--muted);margin:5px 0 0}
+.surface{background:#fff;border:var(--border);border-radius:var(--radius-lg);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}.soft-surface{background:var(--tile);border:var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:14px}.surface-title{font-size:14.4px;font-weight:800;margin:0;color:var(--ink)}.surface-desc{font-size:10.8px;line-height:1.7;color:var(--muted);margin:5px 0 0}
+.field-label{display:block;font-size:10.8px;font-weight:700;color:var(--ink);margin:0 0 5px}.field{width:100%;min-width:0;height:var(--control-height);border:1px solid #b9c3cc;border-radius:var(--radius-control);background:#fff;padding:9px 12px;color:var(--ink);font-size:12.6px;outline:none;transition:border .18s,box-shadow .18s}.field:focus{border-color:#079f7a;box-shadow:0 0 0 2px #09a47826}.field:disabled{background:#edf2f4;color:var(--muted)}.field::placeholder{color:#a7b1b8}.field-wrap{margin-top:14px}.field-row{display:flex;gap:8px;margin-top:14px}.field-row .field{flex:1;min-width:0}
+.btn{min-height:var(--control-height);border:1px solid transparent;border-radius:var(--radius-control);padding:9px 16px;background:var(--navy);color:#fff;font-size:12.6px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:transform .15s,filter .15s,background .15s}.btn:active{transform:scale(.97);filter:brightness(.9)}.btn-block{width:100%}.btn-outline{background:#fff;border-color:#a9bbc5;color:var(--ink)}.btn-soft{background:#e5edf1;color:var(--ink)}.btn:disabled{opacity:.48;cursor:not-allowed}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 3px 12px}.section-head h2{font-size:14.4px;font-weight:800;margin:0;color:var(--ink)}.quiet-link{border:0;background:none;padding:5px;color:#087f67;font-size:10.8px;font-weight:700}
+.empty-state{padding:24px 16px;text-align:center}.empty-icon{width:38px;height:38px;border-radius:50%;background:#e5edf1;color:#12394e;margin:0 auto 10px;display:grid;place-items:center}.empty-icon svg{width:18px;height:18px}.empty-state strong{display:block;font-size:12.6px;font-weight:800;color:var(--ink)}.empty-state p{max-width:270px;margin:5px auto 0;font-size:10.8px;line-height:1.7;color:#627b89}
+.phone-card{display:flex;align-items:center;gap:9px;background:var(--tile);border-radius:var(--radius-md);padding:10px 11px;min-height:64px;margin-bottom:8px;border:0;text-align:right;width:100%}.phone-icon{width:34px;height:34px;border-radius:7px;background:#e4edf1;color:#173c52;display:grid;place-items:center;flex:0 0 34px}.phone-icon svg{width:18px;height:18px;stroke-width:1.9}.phone-info{flex:1;min-width:0}.phone-info strong{display:block;font-size:12.6px;font-weight:800;direction:ltr;text-align:right}.phone-info small{display:block;color:#647e8e;font-size:9.9px;line-height:1.4;margin-top:3px}
+.state{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:6px;font-size:9.9px;font-weight:800;line-height:1.2;white-space:nowrap}.state:before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}.state-active{background:var(--green-bg);color:var(--green-ink)}.state-wait{background:#f0f4f5;color:#506b7a}.state-off{background:#e5edf1;color:#596d79}.state-expired{background:#e9eff1;color:#384d5a}
+.quick-link{display:flex;align-items:center;gap:9px;padding:10px 11px;min-height:64px;background:var(--tile);border-radius:var(--radius-md);margin-bottom:8px}.quick-icon{width:34px;height:34px;border-radius:7px;background:#e4edf1;color:#173c52;display:grid;place-items:center;flex:0 0 34px}.quick-icon svg{width:18px;height:18px;stroke-width:1.9}.quick-text{flex:1;min-width:0}.quick-text strong{display:block;font-size:12.6px;font-weight:800}.quick-text small{display:block;color:#647e8e;font-size:9.9px;line-height:1.4;margin-top:2px}.chevron{font-size:18px;color:#174764}
+.bottom-nav{position:fixed;z-index:20;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:4px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:#f7f9fa;border-top:var(--border)}.nav-item{flex:1 1 0;max-width:105px;min-width:0;border:0;background:transparent;color:#718592;display:grid;justify-items:center;gap:2px;padding:5px 1px;font-size:9.9px}.nav-item svg{width:19px;height:19px}.nav-item.active{color:#087f67;font-weight:800}.nav-item.active svg{stroke-width:2.5}
+.overlay{position:fixed;z-index:50;inset:0;background:#10243599;display:flex;align-items:flex-end;justify-content:center}.sheet{width:min(100%,760px);max-height:92dvh;overflow:auto;background:var(--sheet);border-radius:20px 20px 0 0;padding:9px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 20px 55px #1424304d;animation:sheet-in .22s ease-out}.sheet-handle{width:26px;height:3px;border-radius:10px;background:#b9c3cc;margin:0 auto 8px}.sheet-top{display:flex;justify-content:space-between;align-items:center;height:36px}.sheet-close{width:38px;height:38px;border:0;background:transparent;color:var(--ink);font-size:19.8px}.sheet-hero{text-align:center;padding:4px 0 16px}.sheet-hero-icon{width:38px;height:38px;border-radius:50%;background:#e5edf1;display:grid;place-items:center;margin:0 auto 8px;color:#12394e}.sheet-hero-icon svg{width:18px;height:18px}.sheet-hero h2{font-size:17.1px;font-weight:800;margin:0;color:var(--ink)}
+.detail-block{background:var(--tile);border-radius:var(--radius-md);padding:14px;margin-bottom:10px}.detail-line{display:flex;align-items:center;justify-content:space-between;gap:12px}.detail-label{font-size:9.9px;font-weight:700;color:var(--muted)}.detail-value{font-size:12.6px;font-weight:800;color:var(--text);margin-top:4px}.detail-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:7px;background:#e4edf1;color:#173c52;flex:0 0 34px}.detail-split{display:grid;grid-template-columns:1fr 1fr}.detail-split>div{padding:2px 12px}.detail-split>div+div{border-right:1px solid var(--line)}.remaining{font-size:21.6px;font-weight:800;color:var(--ink);margin-top:4px}.remaining small{font-size:10.8px;color:var(--muted);font-weight:600}.progress-track{height:3px;border-radius:8px;background:var(--line);margin-top:14px;overflow:hidden;direction:ltr}.progress-fill{height:100%;width:0;background:#10ab86;border-radius:8px}
+.alert-note{padding:10px 12px;background:#e5edf1;border-radius:8px;color:#36566a;font-size:10.8px;line-height:1.7}.notice-error{color:#a44343;font-size:10.8px;margin-top:8px}.notice-success{color:#087f67;font-size:10.8px;font-weight:700;margin-top:8px}
+.auth-wrap{min-height:calc(100dvh - 100px);display:flex;flex-direction:column;justify-content:center;padding:25px 0}.auth-brand{text-align:center;margin-bottom:28px}.auth-brand .brand-symbol{width:50px;height:56px;border-radius:10px 10px 25px 25px;font-size:25.2px;margin:0 auto 12px}.auth-brand h1{font-size:19.8px;font-weight:800;margin:0;color:var(--ink)}.auth-brand p{font-size:10.8px;color:var(--muted);margin:6px 0}.auth-card{background:#fff;border:var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow)}.auth-card h2{font-size:17.1px;font-weight:800;margin:0 0 5px}.auth-card>p{font-size:10.8px;color:#627b89;margin:0 0 16px}.auth-foot{text-align:center;color:var(--muted);font-size:9.9px;line-height:1.7;margin-top:16px}
+.admin-app{max-width:1000px}.admin-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat-card{padding:12px;background:var(--tile);border-radius:var(--radius-md);min-height:110px}.stat-icon{width:34px;height:34px;border-radius:7px;background:#e4edf1;color:#173c52;display:grid;place-items:center;margin-bottom:10px}.stat-card small{display:block;color:var(--muted);font-size:9.9px;font-weight:700}.stat-card strong{display:block;font-size:19.8px;font-weight:800;color:var(--ink);margin-top:4px}.stat-card em{font-style:normal;color:var(--muted);font-size:9.9px}
+.admin-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.admin-shortcut{background:var(--tile);border:0;border-radius:var(--radius-md);padding:12px;text-align:right}.admin-shortcut .quick-icon{margin-bottom:8px}.admin-shortcut strong{display:block;font-size:11.7px;font-weight:800}.admin-shortcut small{display:block;font-size:9.9px;color:#647e8e;margin-top:3px}
+@media(min-width:650px){.app{padding-left:28px;padding-right:28px}.admin-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.admin-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr))}.surface,.soft-surface{padding:20px}}
+@keyframes sheet-in{from{transform:translateY(35px);opacity:.6}to{transform:translateY(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation-duration:.01ms!important}}
+/* Phase 1 application shell */
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.topbar-actions .icon-btn{width:44px;height:44px}
+.quick-link[type="button"]{width:100%;border:0;text-align:right;color:inherit;font:inherit}
+.quick-link[type="button"]:focus-visible,.nav-item:focus-visible,.icon-btn:focus-visible{outline:2px solid #079f7a;outline-offset:3px}
+
+/* Phase 2 — C1 to C4 customer lists and detail states */
+.list-tools{padding:16px;margin-bottom:12px}
+.filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.filter-grid .field-label{margin-top:0}
+.filter-grid .field{height:var(--control-height);font-size:11.7px}
+.single-filter{grid-template-columns:minmax(0,1fr)}
+.operation-card{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:right;padding:10px 11px;min-height:64px;margin:0 0 8px;border:0;border-radius:var(--radius-md);background:var(--tile);color:var(--text);box-shadow:var(--shadow)}
+.operation-main{display:grid;gap:4px;min-width:0}
+.operation-main strong{font-size:12.6px;font-weight:800;color:var(--ink)}
+.operation-main small{font-size:9.9px;color:#647e8e}
+.operation-side{display:grid;justify-items:end;gap:6px;flex:0 0 auto}
+.operation-side>strong{font-size:11.7px;color:var(--ink)}
+.sheet-actions{display:grid;gap:8px;margin-top:12px}
+.notice-info{color:#36566a;font-size:10.8px;line-height:1.7;margin-top:8px}
+.list-tools .field-row{margin-top:0}
+@media(max-width:380px){.filter-grid{grid-template-columns:1fr}.operation-card{align-items:flex-start}}
+
+/* Phase 2 — C5 to C8 protection request flow */
+.review-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:var(--border);font-size:11.7px}
+.review-row:last-child{border-bottom:0}
+.review-row span{color:#6e8490;font-size:10.8px;flex:0 0 36%}
+.review-row strong{color:var(--ink);text-align:left;overflow-wrap:anywhere}
+.result-success{text-align:center;padding:20px 12px}
+.result-success>strong{display:block;color:#087f67;font-size:14.4px;font-weight:800;margin:10px 0 16px}
+.result-success .detail-value{margin-bottom:14px}
+.detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+#protection-message,#review-message{font-size:10.8px;line-height:1.7;margin:10px 0}
+#protection-package,#protection-payment{appearance:auto}
+@media(max-width:380px){.detail-actions{grid-template-columns:1fr}.review-row{gap:8px}.review-row span{flex-basis:32%}}
+
+/* Phase 2 — C9 to C12 account, notifications, alerts and reports */
+.check-row{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:var(--border);font-size:11.7px;color:var(--text)}.check-row input{width:19px;height:19px;accent-color:var(--green)}.notification-card{margin-bottom:8px}.notification-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.notification-card p{font-size:10.8px;line-height:1.7;color:#627b89}.notification-card>small{font-size:9.9px;color:var(--muted)}#report-description{height:auto;min-height:84px;resize:vertical;padding-top:10px}
+
+/* Phase 3 — admin A1-A4 */
+.admin-filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.admin-filter-grid>div{min-width:0}.admin-filter-grid .field{height:var(--control-height);font-size:11.7px}.admin-request-card{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:right;background:var(--tile);border:0;border-radius:var(--radius-md);padding:10px 11px;min-height:64px;margin:0 0 8px;color:var(--text);box-shadow:var(--shadow)}.request-card-main{display:grid;gap:4px;min-width:0}.request-card-main strong{font-size:12.6px;font-weight:800;color:var(--ink)}.request-phone{font-size:12.6px;font-weight:800;direction:ltr;text-align:right}.request-card-main small,.request-card-side small{font-size:9.9px;color:#647e8e;line-height:1.5}.request-card-side{display:grid;justify-items:end;gap:6px;flex:0 0 auto}.admin-detail-panel{margin-bottom:12px}.admin-detail-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:var(--border);font-size:11.7px}.admin-detail-row:last-child{border-bottom:0}.admin-detail-row>span{color:#6e8490;font-size:10.8px;flex:0 0 38%}.admin-detail-row>strong{text-align:left;overflow-wrap:anywhere;color:var(--ink)}.detail-toolbar{margin:0 0 12px}.soft-surface h3{font-size:12.6px;font-weight:800;color:var(--ink);margin:0 0 10px}.soft-surface .field{margin-bottom:8px}.admin-stats .stat-card{min-width:0}
+@media(max-width:420px){.admin-filter-grid{grid-template-columns:1fr}.admin-request-card{align-items:flex-start}.admin-detail-row{gap:8px}.admin-detail-row>span{flex-basis:34%}}
+
+
+/* Phase 3 — A5-A8 decision dialogs and number registry */
+.admin-decision-dialog{width:min(560px,calc(100% - 28px));max-width:560px;max-height:min(86vh,760px);padding:0;border:0;border-radius:20px;background:transparent;color:var(--text)}.admin-decision-dialog::backdrop{background:#10243599}.admin-decision-dialog>.surface{max-height:86vh;overflow:auto;padding:18px;border-radius:20px;background:var(--sheet);box-shadow:0 20px 55px #1424304d}.admin-decision-dialog .decision-body{display:grid;gap:12px}.admin-decision-dialog .field{width:100%;margin:6px 0 12px}.admin-decision-dialog .btn{margin-top:8px}.admin-numbers-view{display:grid;gap:12px}.admin-numbers-view .field-row{margin:0}
+
+/* v5 refinements — notification indicator, choice groups, tab strip, sheet close control and sheet size */
+.icon-btn{position:relative}
+.unread-dot{position:absolute;top:9px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--green);border:2px solid #e5edf1}
+.choice-group{border:0;margin:14px 0 6px;padding:0;min-width:0}.choice-group legend{padding:0;margin-bottom:6px}.choice-group .check-row:last-child{border-bottom:0}.check-row{cursor:pointer;min-height:var(--control-height)}
+.tab-strip{display:flex;gap:4px;padding:4px;background:var(--panel-2);border-radius:var(--radius-control)}.tab-strip button{flex:1;min-height:36px;border:0;border-radius:6px;background:transparent;color:#596d79;font-size:10.8px;font-weight:700}.tab-strip button[aria-selected="true"]{background:#fff;color:var(--ink);font-weight:800}
+.sheet-top .sheet-close{margin-inline-start:auto;display:grid;place-items:center}.sheet-close svg{width:20px;height:20px}
+.sheet{max-height:88dvh;overscroll-behavior:contain}
+
+
+/* User-selectable display theme. The default preference follows the operating system. */
+html[data-theme="light"]{color-scheme:light}
+html[data-theme="dark"] body{background:var(--bg);color:var(--text)}
+html[data-theme="dark"] .surface,html[data-theme="dark"] .auth-card,html[data-theme="dark"] .field,html[data-theme="dark"] .btn-outline,html[data-theme="dark"] .tab-strip button[aria-selected="true"]{background:#1a282f;color:var(--text);border-color:var(--line)}
+html[data-theme="dark"] .bottom-nav{background:#17242a;border-color:var(--line)}
+html[data-theme="dark"] .icon-btn,html[data-theme="dark"] .empty-icon,html[data-theme="dark"] .phone-icon,html[data-theme="dark"] .quick-icon,html[data-theme="dark"] .detail-icon,html[data-theme="dark"] .stat-icon,html[data-theme="dark"] .sheet-hero-icon{background:#263942;color:#dce8ec}
+html[data-theme="dark"] .btn-soft,html[data-theme="dark"] .alert-note,html[data-theme="dark"] .notice-info{background:#243740;color:#d5e2e7}
+html[data-theme="dark"] .state-wait,html[data-theme="dark"] .state-off,html[data-theme="dark"] .state-expired{background:#293941;color:#c2d0d5}
+html[data-theme="dark"] .nav-item{color:#a2b1ba}
+html[data-theme="dark"] .nav-item.active,html[data-theme="dark"] .quiet-link,html[data-theme="dark"] .eyebrow{color:#65d4b3}
+html[data-theme="dark"] .tab-strip button{color:#b3c0c5}
+html[data-theme="dark"] .quick-text small,html[data-theme="dark"] .phone-info small,html[data-theme="dark"] .operation-main small,html[data-theme="dark"] .request-card-main small,html[data-theme="dark"] .request-card-side small,html[data-theme="dark"] .empty-state p,html[data-theme="dark"] .auth-card>p,html[data-theme="dark"] .admin-shortcut small{color:#a2b1ba}
+html[data-theme="dark"] .field::placeholder{color:#9eafb7}
+html[data-theme="dark"] .login-card{background:#1a282f;border-color:var(--line);box-shadow:none}
+html[data-theme="dark"] .login-brand h1{color:var(--ink)}
+
+
+/* AMAN.Y visual-reference adaptation — presentation only; AMAN.C structure and behavior remain authoritative. */
+body{font-family:Alexandria,'DM Sans',sans-serif}
+.surface,.auth-card,.admin-decision-dialog>.surface{border-radius:17px}
+.soft-surface,.stat-card,.admin-shortcut,.phone-card,.quick-link,.operation-card,.admin-request-card,.detail-block{border-radius:13px}
+.field,.btn,.icon-btn,.tab-strip,.tab-strip button{border-radius:10px}
+.field{min-height:45px}
+.btn{min-height:45px}
+.section-head{margin-top:24px;margin-bottom:13px}
+.empty-state{padding:26px 18px}
+.bottom-nav{min-height:72px;padding-top:8px}
+.nav-item{gap:4px;padding-top:6px;padding-bottom:6px}
+.nav-item.active{position:relative}
+.nav-item.active:after{content:"";position:absolute;bottom:1px;left:calc(50% - 10px);width:20px;height:3px;border-radius:3px;background:var(--green)}
+.admin-shortcuts{gap:10px}
+.admin-shortcut{min-height:112px;padding:14px}
+.stat-card{min-height:112px;padding:14px}
+@media(min-width:650px){.surface,.soft-surface{padding:20px}.admin-shortcuts{gap:12px}}
+@media(max-width:350px){.app{padding-left:12px;padding-right:12px}.surface,.soft-surface{padding:13px}}
+
+
+/* Screen-specific refinement mapped to AMAN.C's existing markup only. */
+.page-head{padding:14px 2px 20px}
+.page-title{letter-spacing:-.25px}
+.page-desc{max-width:54ch}
+.surface{padding:17px}
+.surface-title{line-height:1.55}
+.surface-desc{line-height:1.8}
+.field-label{margin-bottom:7px}
+.field-row{gap:9px}
+.field{padding-inline:13px}
+.btn{padding-inline:17px;letter-spacing:0}
+.quick-link{padding:11px 12px;min-height:66px;gap:11px}
+.quick-icon,.phone-icon,.stat-icon{width:36px;height:36px;flex-basis:36px}
+.quick-text strong,.phone-info strong{line-height:1.5}
+.quick-text small,.phone-info small{line-height:1.65}
+.phone-card{padding:11px 12px;min-height:68px}
+.state{border-radius:20px;padding:5px 10px}
+.detail-block{padding:15px}
+.sheet{padding:10px 17px calc(20px + env(safe-area-inset-bottom))}
+.sheet-hero{padding:7px 0 18px}
+.overlay{backdrop-filter:blur(2px)}
+.admin-app .page-head{padding-bottom:16px}
+.admin-stats{gap:10px}
+.stat-card{display:flex;flex-direction:column;justify-content:flex-start;gap:4px}
+.stat-card strong{line-height:1.35}
+.admin-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.admin-shortcut{aspect-ratio:1/1;min-height:0;padding:11px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.admin-shortcut .quick-icon{margin:0;width:34px;height:34px;flex:0 0 34px}
+.admin-shortcut strong{font-size:10.8px;line-height:1.55}
+.admin-shortcut small{font-size:9px;line-height:1.5;max-width:100%}
+.admin-shortcut:active{transform:scale(.985);background:var(--panel)}
+.admin-filter-grid{gap:11px}
+.detail-toolbar{flex-wrap:wrap}
+.detail-toolbar>*{flex:1 1 140px}
+.login-card{border-radius:17px;padding:20px}
+.password-wrap .field{padding-inline-end:48px}
+@media(max-width:380px){
+ .admin-shortcuts{gap:7px}
+ .admin-shortcut{padding:8px 5px;gap:5px}
+ .admin-shortcut strong{font-size:9.45px}
+ .admin-shortcut small{font-size:8.1px}
+ .surface{padding:14px}
+}
+@media(min-width:650px){
+ .admin-shortcuts{gap:12px}
+ .admin-shortcut{padding:14px 10px}
+ .admin-shortcut strong{font-size:11.7px}
+ .admin-shortcut small{font-size:9.9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .admin-shortcut,.btn,.field{transition:none}
+}
+
+
+/* Wide admin dashboard: retain square shortcuts and fit the existing ten sections in three rows. */
+@media(min-width:650px){
+ .admin-shortcuts{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+.admin-request-card{transition:background .16s ease,transform .16s ease}
+.admin-request-card:active,.phone-card:active,.quick-link:active{transform:scale(.992)}
+.admin-detail-panel{border-radius:13px}
+.admin-detail-row{line-height:1.7}
+.admin-detail-row>span{min-width:0}
+.admin-detail-row>strong{min-width:0}
+@media(hover:hover){
+ .admin-shortcut:hover,.quick-link:hover,.phone-card:hover,.admin-request-card:hover{filter:brightness(.985)}
+ .btn-outline:hover{border-color:var(--green);color:var(--green-ink)}
+}
+@media(max-width:360px){
+ .nav-item{font-size:9px}
+ .nav-item svg{width:18px;height:18px}
+ .state{font-size:9px;padding:4px 7px}
+ .admin-detail-row{gap:8px}
+}
+
+/* Admin login — styles mapped to the existing admin/index.html markup only. */
+.login-screen{min-height:calc(100dvh - 72px);display:flex;align-items:center;justify-content:center;padding:18px 0}
+.login-wrap{width:min(100%,440px);margin:auto;display:flex;flex-direction:column;justify-content:center;padding:20px 0}
+.login-brand{text-align:center;margin-bottom:22px}
+.login-brand picture{display:block;margin:0 auto 12px}
+.login-logo{display:block;width:auto;height:64px;margin:0 auto}
+.login-brand h1{margin:0;color:var(--ink);font-size:19.8px;line-height:1.5;font-weight:800}
+.login-card{background:var(--paper);border:var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow)}
+.login-card h2{margin:0 0 14px;color:var(--ink);font-size:17.1px;line-height:1.5;font-weight:800}
+.login-form{display:grid;gap:12px}
+.login-field{display:grid;gap:6px;min-width:0}
+.login-input-ltr{direction:ltr;text-align:left}
+.password-wrap{position:relative;min-width:0}
+.password-wrap .field{padding-inline-end:48px}
+.password-toggle{position:absolute;inset-inline-end:6px;top:50%;display:grid;width:36px;height:36px;place-items:center;transform:translateY(-50%);border:0;border-radius:8px;background:transparent;color:var(--muted)}
+.password-toggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.password-toggle:focus-visible{outline:2px solid var(--green);outline-offset:1px}
+.remember-row{display:flex;align-items:center;gap:9px;min-height:28px;color:var(--text);font-size:10.8px;cursor:pointer}
+.remember-row input{width:17px;height:17px;margin:0;accent-color:var(--green)}
+.login-submit{margin-top:2px}
+#admin-login-message:empty{display:none}
+@media(max-width:380px){.login-wrap{padding:12px 0}.login-card{padding:16px}.login-brand{margin-bottom:17px}}
+
+
+/* Global typography correction: reduce every explicit text size by 10% after comparing the rendered scale with AMAN.Y branch AMAN.C.
+   Applies consistently to client/admin and responsive rules; changes font-size declarations only. */
+.brand-copy strong{font-size:17.1px}
+.page-title{font-size:18px}
+.surface-title,.section-head h2{font-size:13.5px}
+.field-label{font-size:10.8px}
+.field{font-size:11.7px}
+.btn{font-size:12.6px}
+.quick-text strong,.phone-info strong,.operation-main strong,.request-card-main strong{font-size:11.7px}
+.detail-value{font-size:11.7px}
+.stat-card strong{font-size:18px}
+.login-brand h1{font-size:18px}
+.login-card h2{font-size:16.2px}
+@media(max-width:380px){
+ .page-title{font-size:17.1px}
+ .login-brand h1{font-size:17.1px}
+}
+
+
+/* Customer authentication — same visual geometry and field rhythm as admin login. */
+#client-app:has(#login-screen:not([hidden])) .topbar,
+#client-app:has(#signup-screen:not([hidden])) .topbar{display:none}
+#client-app:has(#login-screen:not([hidden])),
+#client-app:has(#signup-screen:not([hidden])){padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.auth-wrap{
+ width:min(100%,440px);
+ min-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+ margin-inline:auto;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ padding:24px 0;
+}
+.auth-brand{
+ display:grid;
+ justify-items:center;
+ gap:12px;
+ margin:0 0 28px;
+ text-align:center;
+}
+.auth-brand picture{display:block;margin:0 auto}
+.auth-brand .brand-logo{width:auto;height:76px;margin:0 auto}
+.auth-brand h1{font-size:24px;line-height:1.35;font-weight:800;margin:0;color:var(--navy-deep)}
+.auth-brand p{font-size:12px;line-height:1.4;margin:0;color:var(--muted)}
+.auth-card{
+ width:min(100%,400px);
+ margin:0 auto;
+ padding:24px 20px 22px;
+ border-radius:16px;
+}
+.auth-card h2{text-align:center;font-size:18px;line-height:1.4;margin:0 0 10px}
+.auth-card>p{margin:0 0 18px;text-align:center}
+.auth-card form{display:grid;gap:16px}
+.auth-field{display:grid;gap:6px;min-width:0}
+.auth-field .field-label{margin:0;font-size:13px;font-weight:700;color:var(--ink)}
+.auth-field .field{height:48px;padding:10px 14px;border-radius:10px;font-size:15px}
+.auth-card .btn{min-height:48px;margin-top:4px;border-radius:10px;font-size:16px}
+.auth-card .notice-error{margin:0;font-size:13px;line-height:1.7}
+.auth-card>.quiet-link{font-size:12px;margin-top:14px!important}
+.auth-foot{width:min(100%,400px);margin:12px auto 0;text-align:center;font-size:10px;line-height:1.7}
+@media(max-width:380px){
+ .auth-wrap{padding:16px 0}
+ .auth-brand{margin-bottom:20px}
+ .auth-brand .brand-logo{height:64px}
+ .auth-card{padding:20px 16px 18px}
+}
+ 
+/* Search/filter bars — Y reference pattern: search and filters share one top row. */
+.customer-toolbar{display:grid;align-items:end;gap:8px;margin:0 0 12px}
+.numbers-toolbar{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr) minmax(0,1fr)}
+.operations-toolbar{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+.customer-toolbar>div{min-width:0;position:relative}
+.customer-toolbar .field-label{
+ position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+ clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.customer-toolbar .field{width:100%;min-width:0;height:44px;padding:8px 9px;font-size:10.8px}
+.customer-toolbar .toolbar-search-control{position:relative}
+.customer-toolbar .toolbar-search-control .field{padding-inline-end:40px}
+.customer-toolbar .toolbar-clear{
+ position:absolute;inset-inline-end:4px;top:4px;width:36px;min-height:36px;height:36px;
+ padding:0;border:0;border-radius:7px;font-size:0;background:var(--panel-2);color:var(--ink)
+}
+.customer-toolbar .toolbar-clear::after{content:"×";font-size:18px;line-height:1}
+.customer-toolbar .toolbar-filter select{padding-inline:8px}
+@media(max-width:380px){
+ .customer-toolbar{gap:6px}
+ .numbers-toolbar{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,1fr)}
+ .operations-toolbar{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+ .customer-toolbar .field{padding-inline:7px;font-size:10px}
+}
+
+/* Admin request search and all filters stay aligned in one horizontal toolbar. */
+.admin-filter-grid{
+ grid-template-columns:minmax(0,1.35fr) repeat(3,minmax(0,1fr));
+ align-items:end;
+ gap:8px;
+}
+.admin-filter-grid>div{position:relative;min-width:0}
+.admin-filter-grid .field-label{
+ position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+ clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.admin-filter-grid .field{width:100%;min-width:0;height:44px;padding:8px 8px;font-size:10.8px}
+@media(max-width:420px){
+ .admin-filter-grid{grid-template-columns:minmax(0,1.25fr) repeat(3,minmax(0,1fr));gap:6px}
+ .admin-filter-grid .field{padding-inline:6px;font-size:9.9px}
+}
+
+/* Fit the same toolbar to each dynamic admin filter count without wrapping. */
+.admin-filter-grid:has(>div:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+.admin-filter-grid:has(>div:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+.admin-filter-grid:has(>div:nth-child(4)){grid-template-columns:minmax(0,1.35fr) repeat(3,minmax(0,1fr))}
+@media(max-width:420px){
+ .admin-filter-grid:has(>div:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+ .admin-filter-grid:has(>div:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+ .admin-filter-grid:has(>div:nth-child(4)){grid-template-columns:minmax(0,1.25fr) repeat(3,minmax(0,1fr))}
+}
+
+
+/* Unified internal screen headers — AMAN.Y geometry, AMAN.C identity. */
+.screen-head{
+ display:grid;grid-template-columns:40px minmax(0,1fr) 40px;align-items:center;gap:8px;min-height:40px;margin:0 0 18px;padding:0 2px;direction:rtl;
+}
+.screen-head .tile-btn{flex:none;display:grid;place-items:center;width:40px;height:40px;min-width:40px;padding:0;border:0;border-radius:var(--radius-control);background:var(--panel-2);color:var(--ink)}
+.screen-head .tile-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.screen-head .screen-head-title{min-width:0;text-align:center}
+.screen-head .page-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:17px;font-weight:700;line-height:1.35;letter-spacing:0}
+.screen-head .screen-subtitle{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;color:var(--muted);font-size:12px;line-height:1.3}
+.screen-head .screen-head-spacer{display:block;width:40px;height:40px}
+.screen-head .screen-subtitle:empty{display:none}
+.screen-head .tile-btn:active{transform:scale(.96)}
+.admin-app #request-detail-back{display:none}
+@media(max-width:350px){.screen-head{gap:6px;margin-bottom:16px}.screen-head .page-title{font-size:16px}.screen-head .screen-subtitle{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.screen-head .tile-btn{transition:none}}
+
+
+/* Visual layer refinement — AMAN.Y surface hierarchy, retaining AMAN.C turquoise identity.
+   Flat, intentional surface levels: page background → white cards → soft inset tiles.
+   This block changes presentation only; component structure and behavior remain untouched.
+   (Its token values now live in the central block at the top of this file.) */
+html,body{background:var(--bg)}
+.app{background:var(--sheet)}
+.surface,.auth-card,.login-card{
+ background:var(--paper);
+ border:var(--border);
+ box-shadow:var(--shadow);
+}
+.soft-surface{background:var(--panel);border:1px solid #e3eaed;box-shadow:none}
+.sheet{background:var(--sheet);box-shadow:0 -8px 28px rgba(16,36,53,.08)}
+.admin-decision-dialog>.surface{background:var(--paper);box-shadow:0 16px 42px rgba(16,36,53,.16)}
+.phone-card,.quick-link,.detail-block,.operation-card,.admin-request-card,
+.stat-card,.admin-shortcut{background:var(--tile);box-shadow:none}
+.icon-btn,.screen-head .tile-btn,.empty-icon,.phone-icon,.quick-icon,
+.detail-icon,.stat-icon,.sheet-hero-icon{
+ background:#dcebe8;color:#087f67;
+}
+.brand-symbol{background:#087f67;color:#fff}
+.btn{background:var(--navy);color:#fff}
+.btn-outline{background:var(--paper);border-color:#b9d3ce;color:var(--navy-deep)}
+.btn-soft{background:#dcebe8;color:#075f50}
+.field{background:var(--paper);border-color:#cbd8dc;color:var(--ink)}
+.field:focus{border-color:var(--green);box-shadow:0 0 0 2px rgba(9,164,120,.14)}
+.field:disabled{background:var(--panel);color:var(--muted)}
+.field::placeholder{color:#98a8af}
+.quiet-link,.eyebrow,.notice-success{color:var(--green-ink)}
+.tab-strip{background:var(--panel-2)}
+.tab-strip button[aria-selected="true"]{background:var(--paper);color:var(--navy)}
+.bottom-nav{background:rgba(255,255,255,.96);border-color:var(--line)}
+.nav-item.active{color:var(--green-ink)}
+.state-active{background:var(--green-bg);color:#087f67}
+.state-wait,.state-off,.state-expired{background:var(--panel-2);color:#536b76}
+.alert-note,.notice-info{background:#e2efed;color:#315f59}
+.unread-dot{background:var(--green);border-color:var(--paper)}
+.progress-track{background:var(--line)}
+.progress-fill{background:var(--green)}
+.admin-decision-dialog::backdrop,.overlay{background:rgba(16,36,53,.42)}
+.screen-head .tile-btn:active,.icon-btn:active{background:#d1e5df}
+:focus-visible{outline-color:var(--green)}
+html[data-theme="dark"] body,html[data-theme="dark"] .app{background:var(--bg)}
+html[data-theme="dark"] .surface,
+html[data-theme="dark"] .auth-card,
+html[data-theme="dark"] .login-card,
+html[data-theme="dark"] .admin-decision-dialog>.surface{background:var(--paper);border-color:var(--line);box-shadow:none}
+html[data-theme="dark"] .soft-surface{background:var(--panel);border-color:var(--line)}
+html[data-theme="dark"] .sheet{background:var(--sheet);box-shadow:0 -8px 28px rgba(0,0,0,.3)}
+html[data-theme="dark"] .phone-card,
+html[data-theme="dark"] .quick-link,
+html[data-theme="dark"] .detail-block,
+html[data-theme="dark"] .operation-card,
+html[data-theme="dark"] .admin-request-card,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .admin-shortcut{background:var(--tile)}
+html[data-theme="dark"] .icon-btn,
+html[data-theme="dark"] .screen-head .tile-btn,
+html[data-theme="dark"] .empty-icon,
+html[data-theme="dark"] .phone-icon,
+html[data-theme="dark"] .quick-icon,
+html[data-theme="dark"] .detail-icon,
+html[data-theme="dark"] .stat-icon,
+html[data-theme="dark"] .sheet-hero-icon{background:#29443f;color:#8de0c9}
+html[data-theme="dark"] .brand-symbol{background:#087f67;color:#fff}
+html[data-theme="dark"] .field{background:#17242a;border-color:var(--line);color:var(--ink)}
+html[data-theme="dark"] .field:disabled{background:var(--panel);color:var(--muted)}
+html[data-theme="dark"] .btn{background:var(--navy);color:#062c26}
+html[data-theme="dark"] .btn-outline{background:var(--paper);border-color:#46665f;color:var(--ink)}
+html[data-theme="dark"] .btn-soft,
+html[data-theme="dark"] .alert-note,
+html[data-theme="dark"] .notice-info{background:#243c3a;color:#c7e8df}
+html[data-theme="dark"] .bottom-nav{background:rgba(23,36,42,.97);border-color:var(--line)}
+html[data-theme="dark"] .tab-strip{background:var(--panel-2)}
+html[data-theme="dark"] .tab-strip button[aria-selected="true"]{background:var(--paper);color:var(--ink)}
+html[data-theme="dark"] .state-active{background:var(--green-bg);color:#8de0c9}
+html[data-theme="dark"] .state-wait,
+html[data-theme="dark"] .state-off,
+html[data-theme="dark"] .state-expired{background:#293941;color:#c2d0d5}
+html[data-theme="dark"] .unread-dot{border-color:var(--paper)}
+html[data-theme="dark"] .admin-decision-dialog::backdrop,
+html[data-theme="dark"] .overlay{background:rgba(0,0,0,.62)}
+html[data-theme="dark"] :focus-visible{outline-color:#65d4b3}
+
+
+/* AMAN.C visual identity refinement — turquoise + deep blue, icon-first treatment.
+   Presentation only: keep all controls, hit areas, states and behavior intact. */
+html,body{background:var(--bg);color:var(--text)}
+.app{background:var(--sheet)}
+.surface,.auth-card,.login-card{background:#fff;border-color:var(--line);box-shadow:var(--shadow)}
+.soft-surface{background:#f0f5f6;border-color:#e4ecef}
+.phone-card,.quick-link,.detail-block,.operation-card,.admin-request-card,.stat-card,.admin-shortcut{background:#edf3f5}
+.btn{background:var(--turquoise);color:#fff}
+.btn:hover{filter:brightness(.97)}
+.btn-outline{background:#fff;border-color:#c5d7dc;color:var(--blue)}
+.btn-soft{background:#e2f0ef;color:var(--turquoise-deep)}
+.field{border-color:#cbdadd;background:#fff;color:var(--blue)}
+.field:focus{border-color:var(--turquoise);box-shadow:0 0 0 2px rgba(8,169,154,.13)}
+.quiet-link,.eyebrow,.notice-success,.nav-item.active{color:var(--turquoise-deep)}
+.state-active{background:var(--green-bg);color:#087f78}
+.alert-note,.notice-info{background:#e8f2f3;color:#31596a}
+.progress-fill{background:var(--turquoise)}
+.unread-dot{background:var(--turquoise)}
+/* Icon glyphs are the color surface: no decorative tile, circle or frame around them. */
+.icon-btn,.screen-head .tile-btn,.empty-icon,.phone-icon,.quick-icon,.detail-icon,.stat-icon,.sheet-hero-icon{
+ background:transparent!important;
+ color:var(--blue);
+ box-shadow:none;
+}
+.icon-btn{border:0}
+.screen-head .tile-btn{border:0}
+.empty-icon,.phone-icon,.quick-icon,.detail-icon,.stat-icon,.sheet-hero-icon{
+ border:0;border-radius:0;
+}
+.icon-btn svg,.screen-head .tile-btn svg,.empty-icon svg,.phone-icon svg,.quick-icon svg,
+.detail-icon svg,.stat-icon svg,.sheet-hero-icon svg,.nav-item svg{
+ color:var(--blue);stroke:var(--blue);
+}
+.icon-btn svg path:nth-of-type(2),.screen-head .tile-btn svg path:nth-of-type(2),
+.empty-icon svg path:nth-of-type(2),.phone-icon svg path:nth-of-type(2),
+.quick-icon svg path:nth-of-type(2),.detail-icon svg path:nth-of-type(2),
+.stat-icon svg path:nth-of-type(2),.sheet-hero-icon svg path:nth-of-type(2),
+.nav-item svg path:nth-of-type(2){
+ stroke:var(--turquoise); 
+}
+.icon-btn svg circle:nth-of-type(2),.phone-icon svg circle:nth-of-type(2),
+.quick-icon svg circle:nth-of-type(2),.detail-icon svg circle:nth-of-type(2),
+.stat-icon svg circle:nth-of-type(2){stroke:var(--turquoise)}
+.icon-btn:active,.screen-head .tile-btn:active{background:transparent!important;opacity:.72}
+.nav-item.active svg{stroke:var(--turquoise-deep)}
+.tab-strip{background:#e8f0f2}
+.tab-strip button[aria-selected="true"]{color:var(--blue);box-shadow:0 1px 2px rgba(21,59,86,.06)}
+.bottom-nav{background:rgba(255,255,255,.97);border-color:var(--line)}
+.brand-symbol{background:var(--blue);color:#fff}
+:focus-visible{outline-color:var(--turquoise)}
+html[data-theme="dark"] body,html[data-theme="dark"] .app{background:var(--bg)}
+html[data-theme="dark"] .surface,html[data-theme="dark"] .auth-card,
+html[data-theme="dark"] .login-card,html[data-theme="dark"] .admin-decision-dialog>.surface{
+ background:var(--paper);border-color:var(--line);box-shadow:none
+}
+html[data-theme="dark"] .soft-surface{background:var(--panel);border-color:var(--line)}
+html[data-theme="dark"] .phone-card,html[data-theme="dark"] .quick-link,
+html[data-theme="dark"] .detail-block,html[data-theme="dark"] .operation-card,
+html[data-theme="dark"] .admin-request-card,html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .admin-shortcut{background:var(--tile)}
+html[data-theme="dark"] .icon-btn,html[data-theme="dark"] .screen-head .tile-btn,
+html[data-theme="dark"] .empty-icon,html[data-theme="dark"] .phone-icon,
+html[data-theme="dark"] .quick-icon,html[data-theme="dark"] .detail-icon,
+html[data-theme="dark"] .stat-icon,html[data-theme="dark"] .sheet-hero-icon{
+ background:transparent!important;color:#d9eaf0
+}
+html[data-theme="dark"] .icon-btn svg,html[data-theme="dark"] .screen-head .tile-btn svg,
+html[data-theme="dark"] .empty-icon svg,html[data-theme="dark"] .phone-icon svg,
+html[data-theme="dark"] .quick-icon svg,html[data-theme="dark"] .detail-icon svg,
+html[data-theme="dark"] .stat-icon svg,html[data-theme="dark"] .sheet-hero-icon svg{stroke:#d9eaf0}
+html[data-theme="dark"] .btn{background:#13b8aa;color:#082c30}
+html[data-theme="dark"] .btn-soft,html[data-theme="dark"] .alert-note,
+html[data-theme="dark"] .notice-info{background:#203d43;color:#c5e9e5}
+html[data-theme="dark"] .bottom-nav{background:rgba(25,43,53,.98);border-color:var(--line)}
+html[data-theme="dark"] .field{background:var(--paper);border-color:var(--line);color:var(--ink)}
+html[data-theme="dark"] .state-active{background:var(--green-bg);color:#8de3d9}
+html[data-theme="dark"] :focus-visible{outline-color:#70d9d0}
+
+
+/* AMAN.C — user-defined unified screen layout (2026-11-04).
+   This is an independent C design decision. It does not inherit measurements,
+   spacing scales, or component geometry from another product/repository. */
+html,body{background:var(--bg);color:var(--text)}
+.app{background:var(--bg)}
+/* One uninterrupted base surface from the top edge to the bottom navigation. */
+.topbar{
+  position:sticky;top:0;z-index:35;
+  min-height:64px;height:64px;
+  margin-inline:-16px;padding-inline:16px;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 2px 7px rgba(21,59,86,.045);
+}
+.admin-app .topbar{margin-inline:-28px;padding-inline:28px}
+.bottom-nav{
+  background:var(--bg);
+  border-top:1px solid var(--line);
+  box-shadow:0 -2px 8px rgba(21,59,86,.045);
+}
+html[data-theme="dark"] .topbar,
+html[data-theme="dark"] .bottom-nav{
+  background:var(--bg);border-color:var(--line);
+  box-shadow:0 2px 9px rgba(0,0,0,.18);
+}
+/* On internal pages the screen title/back control becomes the top header. */
+#client-app:has(#number-alerts-screen:not([hidden]))>.topbar,
+#client-app:has(#report-screen:not([hidden]))>.topbar,
+#client-app:has(#numbers-screen:not([hidden]))>.topbar,
+#client-app:has(#operations-screen:not([hidden]))>.topbar,
+#client-app:has(#operation-detail-screen:not([hidden]))>.topbar,
+#client-app:has(#protection-screen:not([hidden]))>.topbar,
+#client-app:has(#review-screen:not([hidden]))>.topbar,
+#client-app:has(#result-screen:not([hidden]))>.topbar,
+#client-app:has(#account-screen:not([hidden]))>.topbar,
+#client-app:has(#notifications-screen:not([hidden]))>.topbar,
+.admin-app:has(#admin-section:not([hidden]))>.topbar{display:none}
+.screen-head{
+  position:sticky;top:0;z-index:30;
+  min-height:62px;
+  margin:0 -16px 12px;
+  padding:9px 16px;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 2px 7px rgba(21,59,86,.045);
+  grid-template-columns:40px minmax(0,1fr) 40px;
+  gap:10px;
+}
+.admin-app .screen-head{margin-inline:-28px;padding-inline:28px}
+.screen-head .tile-btn{
+  width:40px;height:40px;min-width:40px;
+  background:transparent!important;color:var(--blue);
+  border:0;border-radius:0;
+}
+.screen-head .screen-head-title{text-align:center}
+.screen-head .page-title{font-size:16px;font-weight:800;line-height:1.4;color:var(--blue)}
+.screen-head .screen-subtitle{font-size:11px;color:var(--muted)}
+html[data-theme="dark"] .screen-head{
+  background:var(--bg);border-color:var(--line);
+  box-shadow:0 2px 9px rgba(0,0,0,.18);
+}
+/* Search and filters sit immediately under the screen header in one compact row. */
+.list-tools{
+  margin-top:0;margin-bottom:12px;
+  padding:10px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:11px;
+  box-shadow:none;
+}
+.customer-toolbar{
+  display:grid;align-items:end;gap:8px;
+  margin:0;
+}
+.numbers-toolbar{grid-template-columns:minmax(0,1.35fr) repeat(2,minmax(0,1fr))}
+.operations-toolbar{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+.customer-toolbar>div{min-width:0}
+.customer-toolbar .field-label{margin-bottom:4px}
+.customer-toolbar .field{height:42px;min-width:0;padding-inline:8px;font-size:10.5px}
+.admin-filter-grid{
+  display:grid;align-items:end;gap:8px;
+  margin:0;
+  grid-template-columns:minmax(0,1.35fr) repeat(3,minmax(0,1fr));
+}
+.admin-filter-grid:has(>div:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+.admin-filter-grid:has(>div:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+.admin-filter-grid:has(>div:nth-child(4)){grid-template-columns:minmax(0,1.35fr) repeat(3,minmax(0,1fr))}
+.admin-filter-grid>div{min-width:0}
+.admin-filter-grid .field{height:42px;min-width:0;padding-inline:8px;font-size:10.5px}
+.admin-filter-grid .field-label{margin:0 0 4px}
+.admin-app .surface:has(>.admin-filter-grid){
+  margin-top:0;padding:10px;background:var(--panel);
+  border:1px solid var(--line);box-shadow:none;
+}
+.admin-app .surface:has(>.admin-filter-grid)>.field-row{margin-top:8px}
+.filter-grid{margin-top:8px;gap:8px}
+.filter-grid .field{height:42px}
+@media(max-width:420px){
+  .admin-app .topbar,.admin-app .screen-head{margin-inline:-16px;padding-inline:16px}
+  .admin-filter-grid,.admin-filter-grid:has(>div:nth-child(4)){
+    grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:5px
+  }
+  .admin-filter-grid:has(>div:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+  .admin-filter-grid:has(>div:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+  .admin-filter-grid .field,.customer-toolbar .field{padding-inline:5px;font-size:9.6px}
+  .list-tools{padding:8px}
+}
+@media(max-width:350px){
+  .admin-filter-grid,.admin-filter-grid:has(>div:nth-child(4)){gap:4px}
+  .admin-filter-grid .field{font-size:9px;padding-inline:3px}
+}
+/* Cards are slightly brighter than the base; borders define their edges quietly. */
+.surface,.auth-card,.login-card{
+  background:var(--paper);border:1px solid var(--line);
+  box-shadow:var(--shadow);
+}
+.soft-surface{
+  background:var(--panel);border:1px solid var(--line);box-shadow:none;
+}
+.phone-card,.quick-link,.detail-block,.operation-card,.admin-request-card,
+.stat-card,.admin-shortcut{
+  background:var(--tile);border:1px solid var(--line);box-shadow:none;
+}
+.admin-shortcut{border-radius:10px}
+.icon-btn,.screen-head .tile-btn,.empty-icon,.phone-icon,.quick-icon,
+.detail-icon,.stat-icon,.sheet-hero-icon{
+  background:transparent!important;border:0!important;border-radius:0!important;
+  color:var(--blue);box-shadow:none;
+}
+.icon-btn svg,.screen-head .tile-btn svg,.empty-icon svg,.phone-icon svg,
+.quick-icon svg,.detail-icon svg,.stat-icon svg,.sheet-hero-icon svg,
+.nav-item svg{stroke:var(--blue);color:var(--blue)}
+.icon-btn svg path:nth-of-type(2),.screen-head .tile-btn svg path:nth-of-type(2),
+.empty-icon svg path:nth-of-type(2),.phone-icon svg path:nth-of-type(2),
+.quick-icon svg path:nth-of-type(2),.detail-icon svg path:nth-of-type(2),
+.stat-icon svg path:nth-of-type(2),.sheet-hero-icon svg path:nth-of-type(2),
+.nav-item svg path:nth-of-type(2){stroke:var(--turquoise)}
+.nav-item.active,.quiet-link,.eyebrow,.notice-success{color:var(--turquoise-deep)}
+.nav-item.active svg{stroke:var(--turquoise)}
+.btn{background:var(--turquoise);color:#fff}
+.btn-outline{background:var(--paper);border-color:var(--line);color:var(--blue)}
+.btn-soft{background:var(--panel-2);color:var(--blue)}
+.field{background:var(--paper);border-color:var(--line);color:var(--blue)}
+.field:focus{border-color:var(--turquoise);box-shadow:0 0 0 2px rgba(8,169,154,.13)}
+.tab-strip{background:var(--panel-2)}
+.tab-strip button[aria-selected="true"]{background:var(--paper);color:var(--blue)}
+.alert-note,.notice-info{background:var(--panel-2);color:var(--blue)}
+.state-active{background:var(--green-bg);color:var(--turquoise-deep)}
+.progress-fill,.unread-dot{background:var(--turquoise)}
+:focus-visible{outline-color:var(--turquoise)}
+html[data-theme="dark"] body,html[data-theme="dark"] .app{background:var(--bg)}
+html[data-theme="dark"] .surface,html[data-theme="dark"] .auth-card,
+html[data-theme="dark"] .login-card,html[data-theme="dark"] .soft-surface,
+html[data-theme="dark"] .list-tools,html[data-theme="dark"] .admin-app .surface:has(>.admin-filter-grid){
+  background:var(--paper);border-color:var(--line);box-shadow:none;
+}
+html[data-theme="dark"] .soft-surface{background:var(--panel)}
+html[data-theme="dark"] .phone-card,html[data-theme="dark"] .quick-link,
+html[data-theme="dark"] .detail-block,html[data-theme="dark"] .operation-card,
+html[data-theme="dark"] .admin-request-card,html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .admin-shortcut{background:var(--tile);border-color:var(--line)}
+html[data-theme="dark"] .btn{background:var(--turquoise);color:#082c30}
+html[data-theme="dark"] .btn-outline{background:var(--paper);color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] .field{background:var(--paper);border-color:var(--line);color:var(--ink)}
+html[data-theme="dark"] .icon-btn svg,html[data-theme="dark"] .screen-head .tile-btn svg,
+html[data-theme="dark"] .empty-icon svg,html[data-theme="dark"] .phone-icon svg,
+html[data-theme="dark"] .quick-icon svg,html[data-theme="dark"] .detail-icon svg,
+html[data-theme="dark"] .stat-icon svg,html[data-theme="dark"] .sheet-hero-icon svg,
+html[data-theme="dark"] .nav-item svg{stroke:#d9eaf0}
+html[data-theme="dark"] .icon-btn svg path:nth-of-type(2),
+html[data-theme="dark"] .screen-head .tile-btn svg path:nth-of-type(2),
+html[data-theme="dark"] .quick-icon svg path:nth-of-type(2),
+html[data-theme="dark"] .nav-item.active svg{stroke:var(--turquoise)}
+html[data-theme="dark"] .bottom-nav{background:var(--bg);border-color:var(--line)}
+
+
+/* Width and dark-surface refinements for the independent C layout. */
+@media(max-width:649px){
+  .admin-app .topbar,.admin-app .screen-head{margin-inline:-16px;padding-inline:16px}
+}
+@media(min-width:650px){
+  .app:not(.admin-app) .topbar,.app:not(.admin-app) .screen-head{
+    margin-inline:-28px;padding-inline:28px
+  }
+}
+html[data-theme="dark"] .list-tools,
+html[data-theme="dark"] .admin-app .surface:has(>.admin-filter-grid){
+  background:var(--panel);border-color:var(--line)
+}
+
+/* Compact search row: filters stay as meaningful icons until explicitly opened. */
+.compact-filter-row{display:flex!important;align-items:center!important;gap:7px!important;min-width:0}
+.compact-filter-row>.compact-search{flex:1 1 0!important;min-width:72px!important}
+.compact-filter-row>.compact-search .field-label{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.compact-filter-row>.compact-search .field{width:100%;min-width:0}
+.compact-filter{display:flex;align-items:center;gap:6px;flex:0 0 auto!important;min-width:0}
+.compact-filter-control{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+.compact-filter-icon{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--blue);padding:8px}
+.compact-filter-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.compact-filter-icon[aria-expanded="true"]{background:var(--panel-2);border-color:var(--turquoise);color:var(--turquoise-deep)}
+.compact-filter-caption{display:none}
+.compact-filter select.field{width:auto;min-width:104px;max-width:min(38vw,180px);height:40px;padding-inline:7px;font-size:10.5px}
+.compact-filter-row>.compact-filter select[hidden]{display:none!important}
+.compact-filter-row .toolbar-search-control{display:flex;min-width:0}
+.compact-filter-row .toolbar-clear{flex:0 0 auto}
+@media(max-width:380px){
+ .compact-filter-row{gap:5px!important}
+ .compact-filter-icon{width:35px;height:36px;padding:7px}
+ .compact-filter select.field{min-width:92px;max-width:34vw;font-size:9.8px}
+}
+@media(min-width:650px){
+ .admin-filter-grid.compact-filter-row{max-width:100%}
+}
+/* Compact conditional reset control inside the request search row. */
+.requests-reset-icon{flex:0 0 38px!important;width:38px!important;min-width:38px!important;height:40px!important;padding:8px!important;border:1px solid var(--search-border)!important;border-radius:8px!important;background:var(--search-surface)!important;color:var(--blue)!important}
+.requests-reset-icon svg{width:18px;height:18px;stroke:currentColor}
+.requests-reset-icon[hidden]{display:none!important}
+html[data-theme="dark"] .requests-reset-icon{background:var(--search-surface)!important;border-color:var(--search-border)!important;color:var(--ink)!important}
+
+/* Remove redundant refresh controls from screen headers and list toolbars. */
+#dashboard-refresh,#requests-refresh,#request-detail-refresh,#notifications-refresh{display:none!important}
+
+
+/* AMAN.C — inline search and filter controls (user-approved refinement).
+   Search/filter controls are integrated into the screen surface, not presented
+   as a separate card. This layer changes presentation only.
+   (--search-surface / --search-border now live in the central token block.) */
+.list-tools,
+.admin-app .surface:has(>.admin-filter-grid){
+  padding:0!important;
+  margin:0 0 12px!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.admin-app .surface:has(>.admin-filter-grid)>.field-row{margin-top:8px}
+.compact-search .field,
+.toolbar-search .field,
+.admin-filter-grid.compact-filter-row>.compact-search .field{
+  background:var(--search-surface)!important;
+  border:1px solid var(--search-border)!important;
+  border-radius:8px;
+  box-shadow:none;
+  color:var(--blue);
+}
+.compact-search .field:focus,
+.toolbar-search .field:focus,
+.admin-filter-grid.compact-filter-row>.compact-search .field:focus{
+  background:var(--search-surface)!important;
+  border-color:var(--turquoise)!important;
+  box-shadow:0 0 0 2px rgba(8,169,154,.11)!important;
+}
+.compact-filter-icon{
+  background:var(--search-surface)!important;
+  border:1px solid var(--search-border)!important;
+  border-radius:8px!important;
+  color:var(--blue)!important;
+  box-shadow:none!important;
+}
+.compact-filter-icon svg{stroke:var(--blue)}
+.compact-filter-icon svg path:nth-of-type(2),
+.compact-filter-icon svg circle:nth-of-type(2){stroke:var(--turquoise)}
+.compact-filter-icon:hover{border-color:var(--turquoise)!important}
+.compact-filter-icon[aria-expanded="true"]{
+  background:var(--search-surface)!important;
+  border-color:var(--turquoise)!important;
+  color:var(--turquoise-deep)!important;
+}
+.compact-filter select.field{
+  background:var(--search-surface)!important;
+  border:1px solid var(--search-border)!important;
+  color:var(--blue)!important;
+  box-shadow:none!important;
+}
+/* Ensure PR28 inline search/filter colors also cover dynamically rendered admin grids. */
+.admin-app .admin-filter-grid .field{
+  background:var(--search-surface)!important;
+  border:1px solid var(--search-border)!important;
+  color:var(--blue)!important;
+  box-shadow:none!important;
+}
+.admin-app .admin-filter-grid .field:focus{
+  background:var(--search-surface)!important;
+  border-color:var(--turquoise)!important;
+  box-shadow:0 0 0 2px rgba(8,169,154,.11)!important;
+}
+.admin-app .admin-filter-grid .compact-filter-icon{
+  background:var(--search-surface)!important;
+  border:1px solid var(--search-border)!important;
+  color:var(--blue)!important;
+}
+html[data-theme="dark"] .admin-app .admin-filter-grid .field,
+html[data-theme="dark"] .admin-app .admin-filter-grid .compact-filter-icon{
+  background:var(--search-surface)!important;
+  border-color:var(--search-border)!important;
+  color:var(--ink)!important;
+}
+html[data-theme="dark"] .admin-app .admin-filter-grid .compact-filter-icon svg{stroke:#d9eaf0}
+
+html[data-theme="dark"] .compact-search .field,
+html[data-theme="dark"] .toolbar-search .field,
+html[data-theme="dark"] .compact-filter select.field{
+  background:var(--search-surface)!important;
+  border-color:var(--search-border)!important;
+  color:var(--ink)!important;
+}
+html[data-theme="dark"] .compact-filter-icon{
+  background:var(--search-surface)!important;
+  border-color:var(--search-border)!important;
+  color:#d9eaf0!important;
+}
+html[data-theme="dark"] .compact-filter-icon svg{stroke:#d9eaf0}
+html[data-theme="dark"] .compact-filter-icon svg path:nth-of-type(2){stroke:var(--turquoise)}
+html[data-theme="dark"] .compact-filter-icon[aria-expanded="true"]{
+  border-color:var(--turquoise)!important;color:var(--turquoise)!important;
+}
+
+
+/* Unified search/filter row — shared by customer and every admin list. */
+.compact-filter-row{
+  display:flex!important;align-items:center!important;flex-wrap:nowrap!important;
+  gap:6px!important;width:100%;min-width:0;margin:0!important;
+}
+.compact-filter-row>.compact-search{
+  flex:1 1 0!important;min-width:58px!important;max-width:none!important;
+}
+.compact-filter-row>.compact-search .field{
+  width:100%!important;height:40px!important;min-height:40px!important;
+  padding:7px 10px!important;border-radius:8px!important;
+  background:var(--search-surface)!important;border:1px solid var(--search-border)!important;
+  color:var(--blue)!important;box-shadow:none!important;font-size:11px!important;
+}
+.compact-filter-row>.compact-search .field:focus{
+  border-color:var(--turquoise)!important;box-shadow:0 0 0 2px rgba(8,169,154,.12)!important;
+}
+.compact-filter-row>.compact-filter{
+  display:flex!important;align-items:center!important;gap:4px!important;
+  flex:0 0 40px!important;width:auto!important;min-width:0!important;max-width:230px!important;
+  transition:flex-basis .24s cubic-bezier(.2,.75,.25,1),max-width .24s ease;
+}
+.compact-filter-row>.compact-filter.is-expanded{
+  flex-basis:clamp(150px,28vw,210px)!important;max-width:230px!important;
+}
+.compact-filter-control{display:flex;align-items:center;flex:0 0 auto;min-width:0}
+.compact-filter-icon{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  gap:6px!important;width:40px!important;min-width:40px!important;height:40px!important;
+  padding:0 9px!important;overflow:hidden!important;white-space:nowrap!important;
+  border:1px solid var(--search-border)!important;border-radius:8px!important;
+  background:var(--search-surface)!important;color:var(--blue)!important;
+  box-shadow:none!important;transition:width .24s cubic-bezier(.2,.75,.25,1),min-width .24s ease,
+    border-color .18s ease,background .18s ease;
+}
+.compact-filter-icon .compact-filter-glyph{display:grid;place-items:center;flex:0 0 19px;width:19px;height:19px}
+.compact-filter-icon svg{display:block;width:19px;height:19px;fill:none;stroke:var(--blue);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.compact-filter-icon .compact-filter-caption{
+  display:block;max-width:0;overflow:hidden;opacity:0;font-size:10px;font-weight:700;
+  transition:max-width .22s ease,opacity .16s ease;
+}
+.compact-filter-icon .compact-filter-close{
+  display:grid;place-items:center;flex:0 0 0;width:0;height:20px;overflow:hidden;
+  opacity:0;font-size:17px;line-height:1;font-weight:500;
+  transition:width .2s ease,opacity .16s ease;
+}
+.compact-filter.is-expanded .compact-filter-icon{
+  width:76px!important;min-width:76px!important;justify-content:flex-start!important;
+  border-color:var(--turquoise)!important;background:var(--search-surface)!important;
+  color:var(--turquoise-deep)!important;
+}
+.compact-filter.is-expanded .compact-filter-caption{max-width:42px;opacity:1}
+.compact-filter.is-expanded .compact-filter-close{flex-basis:16px;width:16px;opacity:1;color:var(--turquoise-deep)}
+.compact-filter-select{
+  display:block!important;flex:1 1 auto!important;width:0!important;min-width:0!important;
+  max-width:0!important;height:40px!important;min-height:40px!important;
+  padding:0!important;opacity:0;overflow:hidden!important;pointer-events:none;
+  border:0!important;background:var(--search-surface)!important;
+  transition:max-width .24s cubic-bezier(.2,.75,.25,1),opacity .16s ease,padding .2s ease;
+}
+.compact-filter.is-expanded .compact-filter-select{
+  width:100%!important;max-width:132px!important;min-width:72px!important;
+  padding:6px 7px!important;opacity:1;pointer-events:auto;
+  border:1px solid var(--search-border)!important;border-radius:8px!important;
+  color:var(--blue)!important;
+}
+.compact-filter-select:focus{border-color:var(--turquoise)!important;outline:none}
+.compact-filter-icon:hover{border-color:var(--turquoise)!important}
+.compact-filter-row .toolbar-clear{flex:0 0 auto}
+.compact-filter-row>.compact-search .toolbar-search-control{display:flex;min-width:0;gap:5px}
+.compact-filter-row>.compact-search .toolbar-clear{min-width:36px;padding-inline:7px}
+html[data-theme="dark"] .compact-filter-row>.compact-search .field,
+html[data-theme="dark"] .compact-filter-select{
+  background:var(--search-surface)!important;border-color:var(--search-border)!important;color:var(--ink)!important;
+}
+html[data-theme="dark"] .compact-filter-icon{background:var(--search-surface)!important;border-color:var(--search-border)!important;color:var(--ink)!important}
+html[data-theme="dark"] .compact-filter-icon svg{stroke:var(--ink)}
+html[data-theme="dark"] .compact-filter.is-expanded .compact-filter-icon{border-color:var(--turquoise)!important;color:var(--turquoise)!important}
+@media(max-width:420px){
+  .compact-filter-row{gap:4px!important}
+  .compact-filter-row>.compact-filter{flex-basis:36px!important}
+  .compact-filter-row>.compact-filter.is-expanded{flex-basis:clamp(142px,44vw,168px)!important}
+  .compact-filter-icon{width:36px!important;min-width:36px!important;height:38px!important;padding-inline:7px!important}
+  .compact-filter.is-expanded .compact-filter-icon{width:68px!important;min-width:68px!important}
+  .compact-filter-icon .compact-filter-glyph{flex-basis:17px;width:17px;height:17px}
+  .compact-filter-icon svg{width:17px;height:17px}
+  .compact-filter.is-expanded .compact-filter-caption{max-width:32px;font-size:9px}
+  .compact-filter.is-expanded .compact-filter-close{flex-basis:14px;width:14px}
+  .compact-filter.is-expanded .compact-filter-select{max-width:96px!important;min-width:68px!important;font-size:9.5px!important}
+  .compact-filter-row>.compact-search{min-width:48px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .compact-filter-row>.compact-filter,.compact-filter-icon,.compact-filter-caption,
+  .compact-filter-close,.compact-filter-select{transition:none!important}
+}
+
+
+/* Final AMAN.C brand calibration — derived from the official logo gradient.
+   (Its token values now live in the central block at the top of this file.) */
+html,body{background:var(--bg);color:var(--text)}
+.app{background:var(--sheet)}
+.soft-surface{background:var(--panel);border-color:#e5eaee}
+.phone-card,.quick-link,.detail-block,.operation-card,.admin-request-card,.stat-card,.admin-shortcut{background:var(--tile)}
+.btn-soft{background:#e8f0f2;color:var(--turquoise-deep)}
+.field:focus{border-color:var(--turquoise);box-shadow:0 0 0 2px rgba(1,97,109,.11)}
+.quiet-link,.eyebrow,.notice-success,.nav-item.active{color:var(--turquoise-deep)}
+.state-active{background:var(--green-bg);color:var(--turquoise-deep)}
+.progress-fill,.unread-dot{background:var(--turquoise)}
+:focus-visible{outline-color:var(--turquoise)}
+/* The shared admin container is structural only on numbers/customers: no enclosing white card. */
+.admin-numbers-view,.admin-customers-view{display:grid;gap:12px}
+.admin-numbers-view>.admin-filter-grid,.admin-customers-view>.admin-filter-grid{
+ background:transparent;border:0;box-shadow:none;padding:0;margin:0;
+}
+.admin-customers-view>.admin-filter-grid{margin-bottom:0}
+
+
+/* AMAN.C refined duotone icon system: bold silhouettes, clear two-part colour and larger optical scale. */
+svg.aman-icon{display:block;flex:0 0 auto;width:var(--icon-size);height:var(--icon-size);overflow:visible;fill:none;stroke:none;vector-effect:non-scaling-stroke}
+svg.aman-icon .icon-fill{fill:var(--icon-base);stroke:none}
+svg.aman-icon .icon-accent{fill:var(--icon-accent);stroke:none}
+svg.aman-icon .icon-cut{fill:none;stroke:var(--panel);stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn,.tile-btn,.password-toggle,.sheet-close,.stat-icon,.quick-icon,.empty-icon,.phone-icon,.sheet-hero-icon,.button-icon{display:grid;place-items:center;flex:0 0 auto}
+.icon-btn{width:44px;height:44px;min-width:44px;border-radius:11px;background:var(--panel-2);color:var(--icon-base);transition:background .16s ease,transform .16s ease}
+.icon-btn:active,.tile-btn:active{transform:scale(.96)}
+.icon-btn svg,.tile-btn svg,.password-toggle svg,.sheet-close svg{width:24px;height:24px}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.tile-btn{width:42px;height:42px;min-width:42px;border-radius:11px;background:var(--panel-2);color:var(--icon-base);border:1px solid var(--line)}
+.screen-head{display:flex;align-items:center;gap:11px;min-height:58px}
+.screen-head-title{flex:1;min-width:0;align-self:center}
+.screen-head-spacer{flex:0 0 42px}
+.quick-link,.admin-shortcut{display:flex;align-items:center;gap:11px;text-align:start}
+.quick-icon,.phone-icon,.stat-icon,.empty-icon,.sheet-hero-icon{width:42px;height:42px;min-width:42px;border-radius:11px;background:var(--panel-2);color:var(--icon-base)}
+.quick-icon svg,.phone-icon svg,.stat-icon svg,.empty-icon svg,.sheet-hero-icon svg{width:25px;height:25px}
+.quick-text,.phone-info,.admin-shortcut strong{min-width:0;flex:1}
+.quick-link .chevron{display:grid;place-items:center;flex:0 0 20px;width:20px;height:20px;color:var(--icon-accent);font-size:21px;line-height:1}
+.stat-icon{border-radius:11px}
+.nav-item{align-content:center;justify-items:center;gap:4px;min-height:50px;padding:5px 2px}
+.nav-item svg{width:25px;height:25px;stroke:none}
+.nav-item.active svg{filter:drop-shadow(0 1px 1px #079f7a24)}
+.admin-shortcut{min-height:66px;padding:11px 12px}
+.admin-shortcut .quick-icon{margin:0}
+.empty-icon{margin-inline:auto}
+.btn.has-icon{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.has-icon svg,.button-icon svg{width:20px;height:20px}
+.btn.has-icon .button-icon{display:contents}
+.btn.has-icon>svg{width:20px;height:20px}
+.btn.has-icon>span:not(.button-icon){display:inline-block}
+.btn.has-icon svg{stroke:none}
+.password-toggle{width:42px;height:42px}
+.sheet-close{width:40px;height:40px;border-radius:10px;color:var(--icon-base)}
+.sheet-close svg{stroke:none}
+.admin-shortcut>strong,.quick-text strong{line-height:1.45}
+@media(max-width:380px){.screen-head{gap:8px}.tile-btn,.screen-head-spacer{flex-basis:38px;width:38px;min-width:38px}.quick-icon,.phone-icon,.stat-icon,.empty-icon,.sheet-hero-icon{width:39px;height:39px;min-width:39px}.nav-item{font-size:9.4px}.nav-item svg{width:23px;height:23px}}
+@media(prefers-reduced-motion:reduce){.icon-btn,.tile-btn{transition:none}}
+.btn.has-icon:not(.btn-outline) svg.aman-icon .icon-cut{stroke:#d8f6f1!important}
+.btn.has-icon:not(.btn-outline) svg.aman-icon path:nth-of-type(2),.btn.has-icon:not(.btn-outline) svg.aman-icon circle:first-of-type{stroke:#c8eee8!important}
