@@ -27,6 +27,7 @@ const htmlFiles = ["index.html", "apps/customer/index.html", "apps/admin/index.h
 for (const file of htmlFiles) {
   const html = readFileSync(file, "utf8");
   const refs = [...html.matchAll(/(?:src|href)="([^"]+)"/g)].map(match => match[1]);
+  if (file === "index.html" && !html.includes("shared/components/visual-layer-loader.js")) failures.push("الصفحة الرئيسية لا تحمّل الطبقة المرئية المشتركة");
   if (/(?:\.\.\/)(?:client|admin|services|styles)\//.test(html) || /(?:\.\/)(?:client|admin|services|styles)\//.test(html)) failures.push("مسار قديم في الصفحة: " + file);
   for (const ref of refs) {
     if (/^(https?:|#|mailto:|tel:)/i.test(ref)) continue;

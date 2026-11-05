@@ -83,7 +83,7 @@ with sync_playwright() as p:
     browser = p.chromium.launch(executable_path="/usr/bin/google-chrome", args=["--no-sandbox"])
     for theme in ("light", "dark"):
         ctx = browser.new_context(viewport={"width": 390, "height": 844})
-        page = setup_page(ctx, "/admin/", theme)
+        page = setup_page(ctx, "/apps/admin/", theme)
         def snap(name):
             page.wait_for_timeout(250)
             page.screenshot(path=f"{OUT}/{theme}-{name}.png")
@@ -107,7 +107,7 @@ with sync_playwright() as p:
         # ---- client (same origin => simulation state persists in localStorage)
         page = ctx.new_page(); page.set_default_timeout(8000)
         page.route("**/*", lambda r: r.continue_() if r.request.url.startswith("http://127.0.0.1") else r.abort())
-        page.goto(BASE + "/client/", wait_until="domcontentloaded"); page.wait_for_timeout(700)
+        page.goto(BASE + "/apps/customer/", wait_until="domcontentloaded"); page.wait_for_timeout(700)
         try:
             snap("client-login")
             page.evaluate("window.AMANClientNavigation.navigate('signup')"); snap("client-signup")
