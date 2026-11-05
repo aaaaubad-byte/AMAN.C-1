@@ -120,8 +120,30 @@ function openInlineActions(record,host){
  const actions=document.createElement("section");actions.className="surface";
  const h=document.createElement("h2");h.className="surface-title";h.textContent="إجراءات الطلب";actions.append(h);
  const note=document.createElement("p");note.className="surface-desc";note.textContent="يتحقق أمان من الصلاحية والبيانات ومرجع الدفع قبل اعتماد الطلب أو رفضه.";actions.append(note);
- const approve=document.createElement("button");approve.className="btn btn-block";approve.type="button";approve.textContent="مراجعة أثر الاعتماد";addActionIcon(approve,"doc");approve.dataset.adminAction="approve";actions.append(approve);
- const reject=document.createElement("button");reject.className="btn btn-outline btn-block";reject.type="button";reject.style.marginTop="9px";reject.textContent="رفض الطلب";addActionIcon(reject,"flag");reject.dataset.adminAction="reject";actions.append(reject);host.append(actions);
+ const approve=document.createElement("button");approve.className="btn btn-block";approve.type="button";approve.textContent="مراجعة أثر الاعتماد";addActionIcon(approve,"doc");approve.addEventListener("click",()=>showApprovePreview(record,actions));actions.append(approve);
+ const reject=document.createElement("button");reject.className="btn btn-outline btn-block";reject.type="button";reject.style.marginTop="9px";reject.textContent="رفض الطلب";addActionIcon(reject,"flag");reject.addEventListener("click",()=>showRejectForm(record,actions));actions.append(reject);host.append(actions);
+}
+async function showApprovePreview(record,host){
+ const s=service(),box=document.createElement("div");box.className="soft-surface";const h=document.createElement("h3");h.textContent="تأكيد أثر الاعتماد";box.append(h);
+ if(!s||typeof s.getApprovalPreview!=="function"){const p=document.createElement("p");p.textContent="معاينة أثر الاعتماد غير متاحة حاليًا.";box.append(p);host.append(box);return;}
+ const p=document.createElement("p");p.textContent="جارٍ تحميل الفترة والأثر…";box.append(p);host.append(box);
+ try{const r=await s.getApprovalPreview({request_id:record.id});if(r?.success!==true||!r.preview)throw Error();p.textContent="الفترة التي ستنشأ عند التأكيد:";box.append(detailRow("بداية الحماية",r.preview.starts_at),detailRow("نهاية الحماية",r.preview.ends_at),detailRow("أثر الاعتماد",r.preview.effect_description));const confirm=document.createElement("button");confirm.className="btn btn-block";confirm.textContent="تأكيد الاعتماد";addActionIcon(confirm,"flag");confirm.addEventListener("click",()=>performDecision("approve",record.id,{},confirm));box.append(confirm);}
+ catch{p.textContent="تعذر جلب معاينة موثوقة. لم يُعتمد الطلب.";}
+}
+async function showRejectForm(record,host){
+ const s=service(),form=document.createElement("form");form.className="soft-surface";const h=document.createElement("h3");h.textContent="تسجيل رفض الطلب";form.append(h);
+ const label=document.createElement("label");label.className="field-label";label.textContent="سبب الرفض";const select=document.createElement("select");select.className="field";select.required=true;select.add(new Option("اختر سبب الرفض",""));form.append(label,select);
+ const explain=document.createElement("label");explain.className="field-label";explain.style.marginTop="12px";explain.textContent="توضيح إضافي (إن لزم)";const textarea=document.createElement("textarea");textarea.className="field";textarea.rows=3;textarea.maxLength=1000;form.append(explain,textarea);
+ const feedback=document.createElement("p");feedback.setAttribute("aria-live","polite");const submit=document.createElement("button");submit.className="btn btn-block";submit.textContent="تأكيد الرفض";addActionIcon(submit,"flag");form.append(feedback,submit);host.append(form);
+ if(!s||typeof s.getRejectReasons!=="function"){message(feedback,"قائمة أسباب الرفض غير متاحة حاليًا.","error");submit.disabled=true;return;}
+ try{const r=await s.getRejectReasons();const items=Array.isArray(r?.items)?r.items:[];items.forEach(x=>select.add(new Option(x.label,x.code)));if(r?.success!==true||!items.length)throw Error();}catch{message(feedback,"تعذر تحميل أسباب الرفض المعتمدة.","error");submit.disabled=true;}
+ form.addEventListener("submit",e=>{e.preventDefault();if(!select.value){message(feedback,"اختر سبب الرفض أولًا.","error");return;}performDecision("reject",record.id,{reason_code:select.value,explanation:textarea.value.trim()},submit,feedback);});
+}
+async function performDecision(action,id,payload,button,feedback){
+ const s=service(),method=action==="approve"?"approveRequest":"rejectRequest";if(!s||typeof s[method]!=="function"){if(feedback)message(feedback,"تعذر تنفيذ القرار حاليًا.","error");return;}
+ button.disabled=true;button.textContent="جارٍ تنفيذ القرار…";addActionIcon(button,"clock");
+ try{const r=await s[method]({request_id:id,...payload});if(r?.success!==true)throw Error();if(feedback)message(feedback,action==="approve"?"تم اعتماد الطلب.":"تم رفض الطلب.","success");await openRequest(id);await loadRequests();}
+ catch{if(feedback)message(feedback,"لم يصل تأكيد موثوق بالقرار. حدّث حالة الطلب قبل إعادة المحاولة.","error");else window.alert("لم يصل تأكيد موثوق بالقرار. حدّث حالة الطلب قبل إعادة المحاولة.");button.disabled=false;button.textContent=action==="approve"?"تأكيد الاعتماد":"تأكيد الرفض";addActionIcon(button,"flag");}
 }
 async function openRequest(id){
  activeRequestId=id;window.AMANAdminCurrentRequest=null;$("requests-list-view").hidden=true;$("request-detail-view").hidden=false;$("request-detail-content").replaceChildren();current="request-detail";window.scrollTo({top:0,behavior:"smooth"});
