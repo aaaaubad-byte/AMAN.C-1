@@ -5,9 +5,10 @@
 - المستودع: `aaaaubad-byte/AMAN.C-1`
 - المصدر المرجعي: `aaaaubad-byte/AMAN.C`
 - فرع العمل: `develop`
-- آخر commit مؤكد على develop قبل تحديث نقطة الاستئناف: `105912b1fe7a8d3cb714587e070ed12db52cc8b4`
+- آخر commit مؤكد على develop قبل تحديث نقطة الاستئناف: `7ed480331b5a109e58e47c8cd9033bb316a2cd10`
 - main: `c62918d8dd907a62ea8ddd725a0645e86ef13100`
-- حالة الفروع عند آخر مقارنة: develop أمام main بتسعة commits، دون commits خلفه.
+- حالة الفروع عند آخر مقارنة: develop أمام main بسبعة عشر commit، دون commits خلفه.
+- حماية الفروع: main وdevelop غير محميين حالياً؛ لم أغير إعدادات GitHub.
 - آخر مراجعة: 2026-11-05.
 
 ## المنجز
