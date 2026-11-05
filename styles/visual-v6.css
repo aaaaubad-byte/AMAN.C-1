@@ -1,0 +1,287 @@
+/* AMAN.C — visual layer v6.
+   Loaded after styles/app.css (injected by services/theme.js). Presentation only.
+   1) surface layers  2) input-field rule  3) filled two-tone icons  4) horizontal carousel */
+
+/* ---------- 1) Color system: three surface layers + turquoise accent (single source of truth, light theme) ----------
+   Layer 1  screen/window base  --bg    #F4F8FA
+   Layer 2  cards/containers    --paper #FFFFFF   (edges: border + faint shadow, never a new background)
+   Layer 3  input/search fields --field-bg #E6EEF5, --field-border #A9BDC7 (sit directly on layer 1)
+   Accent   --turquoise #078F87: identity/emphasis only (primary buttons, icons, active states, key numbers). */
+:root{
+  --bg:#F4F8FA;
+  --paper:#FFFFFF;
+  --sheet:var(--bg);
+  --panel:var(--paper);
+  --panel-2:var(--paper);
+  --tile:var(--paper);
+  --line:#D8E3E9;--border:1px solid #D8E3E9;
+  --shadow:0 1px 3px rgba(21,59,86,.05);
+  --field-bg:#E6EEF5;--field-border:#A9BDC7;
+  --search-surface:var(--field-bg);--search-border:var(--field-border);
+  --turquoise:#078F87;--turquoise-deep:#078F87;
+  --navy:var(--turquoise);--navy-deep:var(--turquoise);
+  --green:var(--turquoise);--green-ink:var(--turquoise);--green-bg:#E6F4F3;
+  --ic-a:#153b56;--ic-b:var(--turquoise);--ic-c:#ffffff;
+  --num:var(--turquoise);--dot:#b8ccd4;
+  --app-pad:16px;
+}
+html[data-theme="dark"]{
+  --paper:#182b35;      /* card */
+  --bg:var(--paper);    /* screen base = card */
+  --sheet:var(--paper);
+  --panel:var(--paper);
+  --tile:#20363f;
+  --panel-2:#2a4552;
+  --line:#33505d;--border:1px solid #33505d;
+  --field-bg:#08121a;--field-border:#456372;
+  --search-surface:var(--field-bg);--search-border:var(--field-border);
+  --ic-a:#bcd9ea;--ic-b:#18c4b3;--ic-c:#10222c;
+  --num:#4fe0d1;--dot:#3f5967;
+}
+@media(min-width:650px){:root{--app-pad:28px}}
+html,body,.app,.topbar,.bottom-nav,.screen-head,.sheet{
+  background:var(--bg)!important;
+  background-image:none!important;
+}
+
+/* ---------- 2) Input fields: always darker than the surface that holds them ---------- */
+.field,input.field,select.field,textarea.field,
+.compact-search .field,.toolbar-search .field,.compact-filter-select,
+.compact-filter-icon,.auth-field .field,.password-wrap .field,.admin-filter-grid .field{
+  background:var(--field-bg)!important;
+  border:1px solid var(--field-border)!important;
+  color:var(--ink)!important;
+  caret-color:var(--turquoise);
+  box-shadow:none;
+}
+.field::placeholder{color:var(--muted)!important;opacity:1}
+.field:focus,.compact-filter-select:focus,.compact-search .field:focus{
+  border-color:var(--turquoise)!important;
+  box-shadow:0 0 0 2px rgba(7,143,135,.22)!important;
+  outline:none;
+}
+.field:disabled{opacity:.6}
+select.field option{background:var(--paper);color:var(--ink)}
+.password-toggle{color:var(--muted)}
+
+/* ---------- 3) Filled two-tone icons ---------- */
+svg.ami{fill:none!important;stroke:none!important;flex:0 0 auto;display:block}
+svg.ami *{stroke:none!important}
+svg.ami .a{fill:var(--ic-a)!important}
+svg.ami .b{fill:var(--ic-b)!important}
+svg.ami .c{fill:var(--ic-c)!important}
+.icon-btn svg.ami,.quick-icon svg.ami,.phone-icon svg.ami,.detail-icon svg.ami,
+.sheet-hero-icon svg.ami,.empty-icon svg.ami{width:26px;height:26px}
+.stat-icon svg.ami{width:30px;height:30px}
+.admin-shortcut .quick-icon svg.ami{width:30px;height:30px}
+.screen-head .tile-btn svg.ami{width:24px;height:24px}
+.nav-item svg.ami{width:23px;height:23px}
+.compact-filter-icon svg.ami{width:20px;height:20px}
+.sheet-close svg.ami{width:22px;height:22px}
+
+/* ---------- 4) Horizontal carousel ---------- */
+.aman-carousel-track,.admin-stats.aman-carousel-track{
+  display:flex!important;grid-template-columns:none!important;gap:12px;
+  overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+  scrollbar-width:none;
+  margin-inline:calc(-1 * var(--app-pad));
+  padding:6px max(11%,calc((100% - 420px) / 2)) 8px;
+}
+.aman-carousel-track::-webkit-scrollbar{display:none}
+.aman-carousel-track>*{
+  flex:0 0 min(78%,420px);scroll-snap-align:center;scroll-snap-stop:always;
+  border-radius:22px;background:var(--tile);border:1px solid var(--line);
+  transform:scale(.93);opacity:.8;transition:transform .25s ease,opacity .25s ease;
+}
+.aman-carousel-track>.is-active{transform:scale(1);opacity:1}
+.admin-stats.aman-carousel-track .stat-card{
+  min-height:132px;padding:15px;gap:5px;justify-content:space-between;
+  display:flex;flex-direction:column;align-items:flex-start;
+}
+.admin-stats.aman-carousel-track .stat-card small{font-size:11.5px;color:var(--muted)}
+.admin-stats.aman-carousel-track .stat-card strong{font-size:34px;line-height:1.2;color:var(--num);margin-top:0}
+.aman-slot{min-height:132px}
+.aman-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:0 0 14px}
+.aman-dot{width:7px;height:19px;padding:6px 0;border:0;border-radius:7px;background:var(--dot);background-clip:content-box;
+  transition:width .2s ease,background-color .2s ease;cursor:pointer}
+.aman-dot.is-active{width:22px;background-color:var(--turquoise)}
+.aman-home-cards{margin:0 0 4px}
+@media(prefers-reduced-motion:reduce){
+  .aman-carousel-track>*,.aman-dot{transition:none}
+}
+
+
+/* ---------- 5) Component rules for the color system (consume tokens only) ---------- */
+.surface,.soft-surface,.auth-card,.login-card,.phone-card,.quick-link,.detail-block,.operation-card,
+.admin-request-card,.stat-card,.admin-shortcut{background:var(--paper)}
+.btn.btn-outline{background:var(--paper);color:var(--ink);border-color:var(--field-border)}
+.btn.btn-soft{background:var(--paper);color:var(--turquoise);border-color:var(--line)}
+.tab-strip{background:var(--field-bg);border:1px solid var(--field-border)}
+.tab-strip button[aria-selected="true"]{background:var(--paper);color:var(--ink)}
+.alert-note,.notice-info{background:var(--paper);border:1px solid var(--line)}
+.notice-info{border:0}
+.login-submit{background:var(--turquoise)}
+.remember-row input{accent-color:var(--turquoise)}
+.password-toggle[aria-pressed="true"]{color:var(--turquoise)}
+.login-card .field:focus{border-color:var(--turquoise)}
+html[data-theme="dark"] .tab-strip{background:var(--panel-2);border:0}
+html[data-theme="dark"] .alert-note{border:0}
+html[data-theme="dark"] .btn.btn-soft{background:#203d43;color:#c5e9e5;border-color:transparent}
+
+
+/* ---------- 6) Turquoise home cards (light theme only) ----------
+   Apply the approved identity turquoise to the admin statistics cards and
+   the three intentionally empty client-home carousel slots. Dark theme is untouched. */
+html:not([data-theme="dark"]) .admin-stats.aman-carousel-track .stat-card,
+html:not([data-theme="dark"]) .aman-home-cards .aman-carousel-track .aman-slot{
+  background:var(--turquoise);
+  border-color:var(--turquoise);
+  color:#fff;
+}
+html:not([data-theme="dark"]) .admin-stats.aman-carousel-track .stat-card small,
+html:not([data-theme="dark"]) .admin-stats.aman-carousel-track .stat-card strong{
+  color:#fff;
+}
+html:not([data-theme="dark"]) .admin-stats.aman-carousel-track .stat-icon{
+  background:rgba(255,255,255,.18);
+  color:#fff;
+}
+html:not([data-theme="dark"]) .admin-stats.aman-carousel-track .stat-icon .a{
+  fill:#fff;
+}
+html:not([data-theme="dark"]) .admin-stats.aman-carousel-track .stat-icon .b{
+  fill:#d8f3f0;
+}
+
+
+/* Home refinement: topbar, search card, spacing and circular carousel indicators. */
+#client-app .topbar-actions{width:100%;justify-content:flex-start;gap:8px}
+#client-app .topbar-greeting{order:2;margin-inline-start:auto;font-size:14px;font-weight:800;color:var(--ink)}
+#client-app .topbar-actions .icon-btn{order:1}
+.admin-app>.topbar{justify-content:flex-start}
+.aman-dot,.aman-dot.is-active{width:9px;height:9px;min-width:9px;padding:0;border-radius:50%;background:var(--dot)}
+.aman-dot.is-active{background:var(--turquoise);transform:scale(1.2)}
+.aman-dots{gap:9px;margin-top:0}
+.aman-home-cards{margin-top:-9px;margin-bottom:0}
+#home-screen>.section-head{margin-top:16px;margin-bottom:9px}
+#home-screen>.surface.home-search{padding:13px 15px 14px;margin-bottom:9px}
+.home-search-hero{display:flex;flex-direction:column;align-items:center;gap:6px;margin:0 0 12px;text-align:center}
+.home-search-icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--field-bg);color:var(--turquoise)}
+.home-search-icon svg{width:29px;height:29px}
+.home-search-hero h2{font-size:14px;font-weight:800;margin:0;color:var(--ink)}
+#search-form{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+#search-form .field{width:100%;margin:0}
+#search-form .home-search-submit{width:100%;min-height:42px;padding:7px}
+#search-form .home-search-submit svg{width:21px;height:21px}
+.section-heading-icon{display:inline-grid;place-items:center;width:23px;height:23px;margin-inline-end:7px;color:var(--turquoise);vertical-align:middle}
+.section-heading-icon svg{width:21px;height:21px}
+#home-screen>.section-head h2{display:flex;align-items:center}
+@media(max-width:380px){#client-app .topbar-greeting{font-size:12.5px}.home-search-icon{width:44px;height:44px}}
+
+
+/* Admin dashboard: compact top welcome, lifted statistics and circular carousel dots. */
+.admin-app>.admin-topbar{justify-content:flex-start;gap:11px}
+.admin-topbar-greeting{font-size:14px;font-weight:800;color:var(--ink);line-height:1}
+.admin-app #dashboard-screen>.admin-stats{margin-top:-6px;margin-bottom:2px}
+.admin-app #dashboard-screen>.section-head{margin-top:12px;margin-bottom:9px}
+.admin-app #dashboard-screen>.surface{margin-top:12px!important}
+.admin-section-icon{display:inline-grid;place-items:center;width:23px;height:23px;margin-inline-end:7px;color:var(--turquoise);vertical-align:middle}
+.admin-section-icon svg{width:21px;height:21px}
+.admin-app #dashboard-screen .section-head h2{display:flex;align-items:center}
+.admin-app .admin-stats.aman-carousel-track~.aman-dots .aman-dot,
+.admin-app .aman-dots .aman-dot{width:9px;height:9px;min-width:9px;padding:0;border-radius:50%;background:var(--dot);background-clip:border-box}
+.admin-app .aman-dots .aman-dot.is-active{width:9px;height:9px;background:var(--turquoise);transform:scale(1.2)}
+.admin-app .aman-dots{gap:9px;margin:1px 0 8px}
+
+
+/* Correct admin statistics carousel: explicit turquoise fill and true circular indicators.
+   Keep this override scoped to the light theme; the dark theme remains unchanged. */
+html:not([data-theme="dark"]) .admin-app #dashboard-screen>.admin-stats.aman-carousel-track>.stat-card{
+  background:var(--turquoise)!important;
+  background-color:var(--turquoise)!important;
+  border-color:var(--turquoise)!important;
+  color:#fff!important;
+}
+html:not([data-theme="dark"]) .admin-app #dashboard-screen>.admin-stats.aman-carousel-track>.stat-card small,
+html:not([data-theme="dark"]) .admin-app #dashboard-screen>.admin-stats.aman-carousel-track>.stat-card strong{
+  color:#fff!important;
+}
+html:not([data-theme="dark"]) .admin-app #dashboard-screen>.admin-stats.aman-carousel-track>.stat-card .stat-icon{
+  background:rgba(255,255,255,.18)!important;
+  color:#fff!important;
+}
+html:not([data-theme="dark"]) .admin-app #dashboard-screen>.admin-stats.aman-carousel-track>.stat-card .stat-icon .a{fill:#fff!important}
+html:not([data-theme="dark"]) .admin-app #dashboard-screen>.admin-stats.aman-carousel-track>.stat-card .stat-icon .b{fill:#d8f3f0!important}
+.admin-app #dashboard-screen>.admin-stats.aman-carousel-track~.aman-dots .aman-dot{
+  width:9px!important;height:9px!important;min-width:9px!important;min-height:9px!important;
+  padding:0!important;border:0!important;border-radius:50%!important;
+  background:var(--dot)!important;background-clip:border-box!important;
+}
+.admin-app #dashboard-screen>.admin-stats.aman-carousel-track~.aman-dots .aman-dot.is-active{
+  width:9px!important;height:9px!important;background:var(--turquoise)!important;transform:scale(1.2);
+}
+
+
+/* ---------- 7) Visual depth (light theme only; dark theme untouched) ----------
+   Shadows, edge highlights and one limited glass surface. No new colors, sizes, spacing or layout:
+   shadow tints reuse the existing navy (#153b56) and turquoise (#078F87). */
+html:not([data-theme="dark"]){
+  --depth-card:0 1px 2px rgba(21,59,86,.06),0 4px 12px -3px rgba(21,59,86,.10);
+  --depth-field:inset 0 1px 2px rgba(21,59,86,.09);
+  --depth-icon:0 1px 2px rgba(21,59,86,.10),inset 0 1px 0 rgba(255,255,255,.75);
+  --shadow:var(--depth-card);
+}
+
+/* Layer 2: cards and containers lift off the screen base. */
+html:not([data-theme="dark"]) .surface,
+html:not([data-theme="dark"]) .soft-surface,
+html:not([data-theme="dark"]) .auth-card,
+html:not([data-theme="dark"]) .login-card,
+html:not([data-theme="dark"]) .phone-card,
+html:not([data-theme="dark"]) .quick-link,
+html:not([data-theme="dark"]) .detail-block,
+html:not([data-theme="dark"]) .operation-card,
+html:not([data-theme="dark"]) .admin-request-card,
+html:not([data-theme="dark"]) .admin-shortcut{
+  box-shadow:var(--depth-card);
+}
+
+/* Carousel cards: tight shadows so the track's overflow clipping never cuts them. */
+html:not([data-theme="dark"]) .aman-carousel-track>*{
+  box-shadow:0 2px 5px rgba(21,59,86,.10);
+}
+html:not([data-theme="dark"]) .aman-carousel-track>.is-active{
+  box-shadow:0 2px 6px rgba(21,59,86,.16),inset 0 1px 0 rgba(255,255,255,.28);
+}
+
+/* Layer 3: fields sit slightly recessed (focus ring rule above still wins on :focus). */
+html:not([data-theme="dark"]) .field:not(:focus),
+html:not([data-theme="dark"]) .compact-filter-select:not(:focus),
+html:not([data-theme="dark"]) .compact-filter-icon{
+  box-shadow:var(--depth-field);
+}
+
+/* Subtle highlights on icons and featured elements. */
+html:not([data-theme="dark"]) .quick-icon,
+html:not([data-theme="dark"]) .detail-icon,
+html:not([data-theme="dark"]) .phone-icon,
+html:not([data-theme="dark"]) .sheet-hero-icon,
+html:not([data-theme="dark"]) .home-search-icon{
+  box-shadow:var(--depth-icon);
+}
+html:not([data-theme="dark"]) .admin-stats.aman-carousel-track .stat-icon{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+}
+html:not([data-theme="dark"]) .login-submit,
+html:not([data-theme="dark"]) .btn.btn-primary{
+  box-shadow:0 2px 6px rgba(7,143,135,.25),inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+/* Limited glassmorphism: bottom bar only (near-opaque, so text contrast is unchanged). */
+html:not([data-theme="dark"]) .bottom-nav{
+  background:rgba(244,248,250,.84)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(1.1);
+  backdrop-filter:blur(14px) saturate(1.1);
+  box-shadow:0 -4px 14px -6px rgba(21,59,86,.14);
+}
