@@ -21,7 +21,6 @@ jobs:
           node-version: 22
       - name: Install browser test dependency
         run: |
-          npm init -y
           npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium
       - name: Run all Node and browser tests
